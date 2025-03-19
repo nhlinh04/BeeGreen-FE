@@ -72,9 +72,6 @@ const ModalActualQuantity = ({ billDetail, show, setShow, createHistoryBill, fet
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
-                Chọn sản phẩm
-            </Button>
             <Modal
                 show={show}
                 onHide={handleClose}

@@ -84,18 +84,14 @@ const ModalDetailBill = () => {
     };
 
     useEffect(() => {
-        navigate(`/admins/manage-bill-detail/${codeBill}`);
+        // navigate(`/admins/manage-bill-detail/${codeBill}`);
         if (codeBill) {
             dispatch(fetchAllPayBillOrder(codeBill));
             dispatch(fetchPostsPayBillOrderSuccess)
-
+            fetchBillDetailsAndPayBill();
+            dispatch(fetchBillDetailByEmployeeByCodeBill(codeBill));
         }
     }, [codeBill, dispatch]);
-
-    useEffect(() => {
-        dispatch(fetchBillDetailByEmployeeByCodeBill(codeBill));
-    }, [dispatch, codeBill]);
-
     // Hàm làm tròn và định dạng số
     const formatCurrency = (value) => {
         // Làm tròn thành số nguyên
@@ -214,7 +210,7 @@ const ModalDetailBill = () => {
             await createHistory(historyMessage, today, codeBill, user.id, 'ACTIVE');
 
             // Refresh bill details after creating history
-            fetchBillDetailsAndPayBill(0);
+            fetchBillDetailsAndPayBill();
 
 
         } catch (error) {
@@ -236,7 +232,7 @@ const ModalDetailBill = () => {
             await createHistory(user.name + ' Đã thêm sản phẩm ', today, codeBill, user.id, 'ACTIVE');
 
 
-            fetchBillDetailsAndPayBill(0);
+            fetchBillDetailsAndPayBill();
 
 
         } catch (error) {
@@ -255,7 +251,7 @@ const ModalDetailBill = () => {
             const today = new Date().toISOString();
             await createHistory(`${user.name} đã hủy hóa đơn vì ${inputValue}`, today, codeBill, user.id, 'ACTIVE');
 
-            fetchBillDetailsAndPayBill(0);
+            fetchBillDetailsAndPayBill();
         } catch (error) {
             console.error(`Error creating history: ${error}`);
         }
@@ -271,17 +267,16 @@ const ModalDetailBill = () => {
             const today = new Date().toISOString();
             await createHistory(`${user.name} ${inputValue}`, today, codeBill, user.id, 'ACTIVE');
 
-            fetchBillDetailsAndPayBill(0);
+            fetchBillDetailsAndPayBill();
         } catch (error) {
             console.error(`Error creating history: ${error}`);
         }
     };
 
 
-    const updatePayment = async () => {
+    const editPayment = async () => {
         try {
             await updatePayment(codeBill, 'COMPLETED');
-            fetchBillDetailsAndPayBill(0);
         } catch (error) {
             console.error(`Error creating history: ${error}`);
         }
@@ -298,13 +293,16 @@ const ModalDetailBill = () => {
         }).then(async (willComplete) => {
             if (willComplete) {
                 try {
+                    console.log(billSummary?.status)
                     if (billSummary.status == "PENDING") {
                         setShow2(true);
-
                     } else {
-                        // await completeBill(codeBill);
+                        if (billSummary?.status === 'SHIPPED') {
+                            await editPayment();
+                        }
+                        await completeBill(codeBill);
                         await createHistoryBill();
-                        await fetchBillDetailsAndPayBill(0);
+                        await fetchBillDetailsAndPayBill();
                         swal("Thành công!", "Trạng thái hóa đơn đã được cập nhật.", "success");
                     }
                 } catch (error) {
@@ -357,11 +355,6 @@ const ModalDetailBill = () => {
 
 
 
-    useEffect(() => {
-        if (codeBill) {
-            fetchBillDetailsAndPayBill(0);
-        }
-    }, [codeBill, 0]);
 
 
     const renderTableRows = (data, type) => {
@@ -494,17 +487,7 @@ const ModalDetailBill = () => {
                                         variant="primary"
                                         className="m-3"
                                         disabled={status.status5 || !status.status1}
-                                        onClick={async () => {
-                                            try {
-                                                await handleCompleteBill();
-
-                                                if (billSummary?.status === 'SHIPPED') {
-                                                    await updatePayment();
-                                                }
-                                            } catch (error) {
-                                                alert("Có lỗi xảy ra: " + error.message);
-                                            }
-                                        }}
+                                        onClick={() => handleCompleteBill()}
                                     >
                                         {showStatus(billSummary?.status)}
                                     </Button>
@@ -622,7 +605,7 @@ const ModalDetailBill = () => {
                             {billSummary?.status !== 'FAILED' && billSummary?.status !== 'SHIPPED' && billSummary?.status !== 'COMPLETED' && billSummary?.status !== 'CONFIRMED' && billSummary?.status !== 'WAITTING_FOR_SHIPPED' && billSummary?.status !== 'CANCELLED' ? (
                                 <ModalUpdateCustomer
                                     customerData={billSummary}
-                                    onUpdate={() => fetchBillDetailsAndPayBill(0)}
+                                    onUpdate={() => fetchBillDetailsAndPayBill()}
                                 />
                             ) : (
                                 <Button variant="secondary" disabled>

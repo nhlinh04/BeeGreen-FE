@@ -81,7 +81,7 @@ const ModalDetailBill = () => {
     useEffect(() => {
         setCurrentPage(1)
     }, [listBillDetailOrder]);
-    // Hàm làm tròn và định dạng số
+          // Hàm làm tròn và định dạng số
     const formatCurrency = (value) => {
         // Làm tròn thành số nguyên
         const roundedValue = Math.round(value);
@@ -96,9 +96,6 @@ const ModalDetailBill = () => {
             setBillSummary(data.billSummary);
             setBillDetail(data.billDetails);
             console.log('dat2a', data.billDetails);
-
-
-
             setPayBill(data.payBill);
             setBillHistory(data.billHistory);
             // setTotalPages(data.totalPages);
