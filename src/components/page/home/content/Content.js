@@ -105,11 +105,13 @@ const Content = () => {
         <div className='container'>
         <div className='FeaturedProduct'>
             {/* Phần sản phẩm nổi bật */}
-            <div className="row m-2">
-                <h2 className="text-start col m-3">Sản phẩm nổi bật</h2>
-            </div>
+            
 
             <div className="slider-container">
+            <div className="row m-2 ">
+                <h2 className="text-center col m-3 fw-bold text-uppercase">Sản phẩm mới</h2>
+            </div>
+
                 <Slider {...settings}>
                     {products.map((product) => (
                         <Link

@@ -61,10 +61,10 @@ function Header() {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto justify-content-center w-100">
                         <Nav.Link as={Link} to="/">Trang chủ</Nav.Link>
-                        <Nav.Link as={Link} to="/about">Giới thiệu</Nav.Link>
                         <Nav.Link as={Link} to="/allProducts">Cửa hàng</Nav.Link>
+                        <Nav.Link as={Link} to="/about">Giới thiệu</Nav.Link>
                         <Nav.Link as={Link} to="/contact">Liên hệ</Nav.Link>
-                        <Nav.Link as={Link} to="/blog">Blog</Nav.Link>
+                        {/* <Nav.Link as={Link} to="/blog">Blog</Nav.Link> */}
                     </Nav>
 
                     {/* Tài khoản / Đăng nhập */}

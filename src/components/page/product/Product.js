@@ -160,7 +160,20 @@ const Product = () => {
 
   return (
     <div className="homePage">
-      <Banner />
+      <div className="banner-ct">
+  <a href="/" className="banner-link">
+    <img src="./banner-cua-hang.jpg" alt="Banner" />
+  </a>
+  <div className="banner-buttons">
+    <h3 className="text-dark">CỬA HÀNG</h3> {/* Thêm lớp text-dark */}
+    <div className="link-back">
+      <a href="/" className="text-dark fw-bold"> {/* Thêm text-dark + đậm chữ */}
+        Trang chủ
+      </a>
+    </div>
+  </div>
+</div>
+
 
       <div className="row m-5">
         <div className="col-lg-2 col-md-4 col-sm-12 pt-5">
@@ -176,7 +189,7 @@ const Product = () => {
         <div className="col-lg-10 col-md-8 col-sm-12">
           <div className="collection-content-wrapper">
             <div className="collection-head">
-              <h1>TẤT CẢ SẢN PHẨM</h1>
+              <h1></h1>
               <div className="collection-sidebar">
                 <input
                   className="form-control"
