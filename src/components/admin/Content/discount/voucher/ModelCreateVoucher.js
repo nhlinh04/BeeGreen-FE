@@ -312,7 +312,7 @@ function ModelCreateVoucher() {
               const emailContent = generateEmailContent({
                 companyName: "GreenBee",
                 companyPhone: "0909 123 456",
-                companyEmail: "linhnhph33830@fpt.edu.vn",
+                companyEmail: "greenbee@gmail.com",
                 customerName: customer?.name || "thân mến",
                 voucherCode: voucherDetails.codeVoucher,
                 discountName: voucherDetails.name,
@@ -320,7 +320,7 @@ function ModelCreateVoucher() {
                 minOrderValue: voucherDetails.minBillValue,
                 expirationDate: voucherDetails.endAt,
                 startDate: voucherDetails.startAt,
-                websiteUrl: "http://localhost:3000/",
+                websiteUrl: "https://GreenBee.com",
                 image:
                   "https://upload.wikimedia.org/wikipedia/commons/2/20/FPT_Polytechnic.png",
               });

@@ -23,9 +23,6 @@ export const fetchAllPromotion = () => {
             if (response.status === 200) {
                 const data = response.data;
                 dispatch(fetchPostsPromotionSuccess(data))
-            } else {
-                toast.error('Error')
-                dispatch(fetchPostsPromotionError);
             }
         } catch (error) {
             dispatch(fetchPostsPromotionError)
@@ -41,9 +38,6 @@ export const fetchPromotionAndProductPromotion = (idPromotion) => {
             if (response.status === 200) {
                 const data = response.data;
                 dispatch(fetchPostsPromotionAndProductPromotionSuccess(data))
-            } else {
-                toast.error('Error')
-                dispatch(fetchPostsPromotionError());
             }
         } catch (error) {
             dispatch(fetchPostsPromotionError())
@@ -59,9 +53,6 @@ export const fetchSearchPromotionAndProductPromotion = (idPromotion, listIdProdu
             if (response.status === 200) {
                 const data = response.data;
                 dispatch(fetchPostsPromotionAndProductPromotionSuccess(data))
-            } else {
-                toast.error('Error')
-                dispatch(fetchPostsPromotionError);
             }
         } catch (error) {
             dispatch(fetchPostsPromotionError)
@@ -77,9 +68,6 @@ export const fetchSearchPosts = (search, status) => {
             if (response.status === 200) {
                 const data = response.data;
                 dispatch(fetchPostsPromotionSuccess(data))
-            } else {
-                toast.error('Error')
-                dispatch(fetchPostsPromotionError());
             }
         } catch (error) {
             dispatch(fetchPostsPromotionError())
@@ -96,29 +84,6 @@ export const createNewPromotion = (promotionCreationRequest) => {
                 toast.success("Thêm khuyến mãi thành công!");
             }
         } catch (error) {
-            console.error("Lỗi khi thêm khuyến mãi:", error);
-
-            if (error.response) {
-                const statusCode = error.response.status;
-                const errorData = error.response.data;
-
-                if (statusCode === 400) {
-                    if (Array.isArray(errorData)) {
-                        errorData.forEach(err => {
-                            toast.error(err);
-                        });
-                    } else {
-                        toast.error("Đã xảy ra lỗi xác thực. Vui lòng kiểm tra lại.");
-                    }
-                } else {
-                    toast.error("Lỗi hệ thống. Vui lòng thử lại sau.");
-                }
-            } else if (error.request) {
-                toast.error("Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng.");
-            } else {
-                toast.error("Đã xảy ra lỗi. Vui lòng thử lại sau.");
-            }
-
             dispatch(fetchPostsPromotionError());
         }
     };
@@ -132,29 +97,6 @@ export const postsUpdatePromotion = (promotionUpdatesRequest) => {
                 toast.success("Cập nhật khuyến mãi thành công!");
             }
         } catch (error) {
-            console.error("Lỗi khi cập nhật khuyến mãi:", error);
-
-            if (error.response) {
-                const statusCode = error.response.status;
-                const errorData = error.response.data;
-
-                if (statusCode === 400) {
-                    if (Array.isArray(errorData)) {
-                        errorData.forEach(err => {
-                            toast.error(err);
-                        });
-                    } else {
-                        toast.error("Đã xảy ra lỗi xác thực. Vui lòng kiểm tra lại.");
-                    }
-                } else {
-                    toast.error("Lỗi hệ thống. Vui lòng thử lại sau.");
-                }
-            } else if (error.request) {
-                toast.error("Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng.");
-            } else {
-                toast.error("Đã xảy ra lỗi. Vui lòng thử lại sau.");
-            }
-
             dispatch(fetchPostsPromotionError());
         }
     };
@@ -168,36 +110,6 @@ export const updateStatusPromotionById = (idPromotion, aBoolean) => {
                 toast.success("Cập nhật trạng đợt giảm giá thành công!");
             }
         } catch (error) {
-            console.error("Lỗi khi cập nhật đợt giảm giá:", error);
-
-            if (error.response) {
-                const statusCode = error.response.status;
-                const errorData = error.response.data;
-
-                if (statusCode === 400) {
-                    // Xử lý lỗi validation (400 Bad Request)
-                    if (Array.isArray(errorData)) {
-                        errorData.forEach(err => {
-                            toast.error(err); // Hiển thị từng lỗi trong mảng
-                        });
-                    } else {
-                        toast.error("Đã xảy ra lỗi xác thực. Vui lòng kiểm tra lại.");
-                    }
-                } else if (statusCode === 409) {
-                    const { mess } = errorData;
-                    toast.error(mess);
-                } else {
-                    // Xử lý các lỗi khác
-                    toast.error("Lỗi hệ thống. Vui lòng thử lại sau.");
-                }
-            } else if (error.request) {
-                // Lỗi do không nhận được phản hồi từ server
-                toast.error("Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng.");
-            } else {
-                // Lỗi khác (cấu hình, v.v.)
-                toast.error("Đã xảy ra lỗi. Vui lòng thử lại sau.");
-            }
-
             dispatch(fetchPostsPromotionError());
         }
     };
