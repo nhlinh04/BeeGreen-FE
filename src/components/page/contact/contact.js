@@ -54,7 +54,7 @@ const Contact = () => {
         </a>
         <div className="banner-buttons">
           <h3>LIÊN HỆ</h3>
-          <div className="link-back">
+          <div className="link-back-ct">
             <a href="/" className="">
               Trang chủ
             </a>

@@ -310,9 +310,9 @@ function ModelCreateVoucher() {
             for (const email of emails) {
               const customer = customers.find((c) => c.email === email);
               const emailContent = generateEmailContent({
-                companyName: "SuperShoes",
+                companyName: "GreenBee",
                 companyPhone: "0909 123 456",
-                companyEmail: "namntph33821@gmail.com",
+                companyEmail: "linhnhph33830@fpt.edu.vn",
                 customerName: customer?.name || "thân mến",
                 voucherCode: voucherDetails.codeVoucher,
                 discountName: voucherDetails.name,
@@ -320,7 +320,7 @@ function ModelCreateVoucher() {
                 minOrderValue: voucherDetails.minBillValue,
                 expirationDate: voucherDetails.endAt,
                 startDate: voucherDetails.startAt,
-                websiteUrl: "https://SuperShoes.com",
+                websiteUrl: "http://localhost:3000/",
                 image:
                   "https://upload.wikimedia.org/wikipedia/commons/2/20/FPT_Polytechnic.png",
               });

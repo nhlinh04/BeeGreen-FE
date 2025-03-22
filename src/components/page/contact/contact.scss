@@ -152,7 +152,7 @@
       text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Hiệu ứng bóng */
     }
 
-    .link-back {
+    .link-back-ct {
       display: flex;
       gap: 15px;
 
@@ -164,7 +164,7 @@
         transition: color 0.3s ease-in-out;
 
         &:hover {
-          color: #73f34c; /* Màu cam khi hover */
+          color: #73f34c; 
         }
       }
     }

@@ -35,10 +35,15 @@
 }
 
 .btn-select:hover {
-  border-color: #999; /* Slightly darker border on hover */
+  background-color: #A7DE7A; /* Slightly darker border on hover */
 }
 
 .btn-select.selected {
   border-color: #333; /* Darker border for selected state */
   color: #333; /* Darker text for selected state */
+}
+.btn-select.selected {
+  background-color: #73C135; /* Màu nền khi được chọn */
+  color: white; /* Màu chữ khi được chọn */
+  border-color: #4a8c2f; /* Viền tối hơn để tạo hiệu ứng */
 }
