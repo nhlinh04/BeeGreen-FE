@@ -55,6 +55,11 @@ const TableShoe = ({ currentPage, setCurrentPage }) => {
 
         return Array.from({ length: (endPage - startPage + 1) }, (_, i) => startPage + i);
     };
+    const formatCurrency = (value) => {
+        if (!value) return '0';
+        const roundedValue = Math.round(value) || 0;
+        return roundedValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
     return (
         <>
             <Table striped bordered hover>
@@ -64,6 +69,7 @@ const TableShoe = ({ currentPage, setCurrentPage }) => {
                         <th className='text-center'>Tên sản phẩm</th>
                         <th className='text-center'>Số lượng</th>
                         <th className='text-center'>Đơn vị gốc</th>
+                        <th className='text-center'>Giá</th>
                         <th className='text-center'>Danh mục</th>
                         <th className='text-center'>Ảnh</th>
                         <th className='text-center'>Trạng thái</th>
@@ -78,6 +84,7 @@ const TableShoe = ({ currentPage, setCurrentPage }) => {
                                 <td className='text-center align-middle'>{item.name}</td>
                                 <td className='text-center align-middle'>{item.quantity} {item.baseUnit}</td>
                                 <td className='text-center align-middle'>{item.baseUnit}</td>
+                                <td className='text-center align-middle'>{formatCurrency(item.pricePerBaseUnit)} VND</td>
                                 <td className='text-center align-middle'>{item.nameCategory}</td>
                                 <td className="d-flex justify-content-center align-items-center">
                                     <ListImageProduct
