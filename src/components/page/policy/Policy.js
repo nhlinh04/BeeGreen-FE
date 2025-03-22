@@ -29,7 +29,7 @@ const PolicyPage = () => {
             <p>
                 Nếu có thắc mắc về chính sách bảo mật, vui lòng liên hệ:
                 <strong>
-                    namntph33821@gmail.com</strong>.
+                    greenbee@gmail.com</strong>.
             </p>
         </div>
     );
