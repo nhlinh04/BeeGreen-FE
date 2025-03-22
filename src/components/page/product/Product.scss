@@ -42,7 +42,6 @@
 .product-card {
     position: relative;
     max-width: 3000px; /* Adjust size as needed */
-    
     margin: auto;
     cursor: pointer;
     border: 0;
@@ -128,3 +127,30 @@
     z-index: 99;
   }
   
+.link-back{
+
+      a {
+        text-decoration: none;
+        transition: color 0.3s ease-in-out;
+      }
+      &:hover{
+        padding: 5px;
+        background-color: rgb(224, 222, 222);
+      }
+}
+
+.list-gr {
+    position: relative;
+    padding: 10px;
+}
+
+.list-gr::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.2));
+    box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.3);
+}

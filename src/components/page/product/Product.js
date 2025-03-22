@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from "react";
-import Banner from "./banner/Banner";
 import "./Product.scss";
 import Dropdown from "./Dropdown/Dropdow";
 import ListGroup from "./ListGroup";
@@ -127,12 +126,12 @@ const Product = () => {
         <OverlayTrigger
           placement="top"
           overlay={
-            <Tooltip>
+            <Tooltip >
               {formatCurrency(product.priceBase)} VND
             </Tooltip>
           }
         >
-          <p className="product-price truncate-text">
+          <p className="product-price truncate-text" > 
             {formatCurrency(product.priceBase)} VND
           </p>
         </OverlayTrigger>
@@ -149,7 +148,7 @@ const Product = () => {
             <p className="product-sale-price text-danger truncate-text">
               {formatCurrency(product.priceSale)} VND
             </p>
-            <p className="product-original-price text-decoration-line-through truncate-text">
+            <p className="product-original-price truncate-text">
               {formatCurrency(product.priceBase)} VND
             </p>
           </div>
@@ -176,7 +175,7 @@ const Product = () => {
 
 
       <div className="row m-5">
-        <div className="col-lg-2 col-md-4 col-sm-12 pt-5">
+        <div className="col-lg-2 col-md-4 col-sm-12 pt-5 list-gr">
           <ListGroup
             title="Danh mục"
             items={categories.map((category) => category.name)}
