@@ -68,7 +68,6 @@ export default function ModelCreatePromotion() {
                 promotionRequest,
                 productPromoRequest: selectedProductIds
             };
-            console.log(promotionCreationRequest)
             dispatch(createNewPromotion(promotionCreationRequest));
             resetForm();
             navigate('/admins/manage-promotion');
