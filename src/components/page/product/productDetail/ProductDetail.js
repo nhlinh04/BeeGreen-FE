@@ -231,7 +231,7 @@ function ProductDetail() {
                   />
                   <p className="mb-0">
                     {selectedProductUnit && product.quantity
-                      ? `Còn ${Math.floor(product.quantity / selectedProductUnit.conversionFactor)} sản phẩm`
+                      ? `Còn ${Math.floor(product.quantity / selectedProductUnit.conversionFactor)} sản phẩm (${selectedProductUnit.unitName})`
                       : 'Hết hàng'}
                   </p>
                 </div>

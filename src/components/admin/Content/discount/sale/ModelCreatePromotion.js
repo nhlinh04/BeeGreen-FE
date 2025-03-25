@@ -53,6 +53,12 @@ export default function ModelCreatePromotion() {
 
     const handleSubmitCreate = async (values, { resetForm }) => {
         try {
+            if (!selectedProductIds || selectedProductIds.length === 0) {
+                toast.error("Cần chọn sản phẩm sale!");
+                return;
+            }
+
+            console.log("selectedProductIds", selectedProductIds)
             const promotionRequest = {
                 ...values,
                 startAt: new Date(values.startAt).toISOString(),
