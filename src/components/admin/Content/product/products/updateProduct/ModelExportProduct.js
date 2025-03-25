@@ -7,9 +7,9 @@ import { useDispatch } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaTrash } from "react-icons/fa";
 import swal from 'sweetalert';
-import { exportProduct } from '../../../../../Service/ApiProductService'
-import { fetchAllProductProductDetail } from '../../../../../redux/action/productAction';
-function ModelExportProduct({ idProduct }) {
+import { exportProduct } from '../../../../../../Service/ApiProductService'
+import { fetchAllProductProductDetail } from '../../../../../../redux/action/productAction';
+function ModelExportProduct({ idProduct, codeBatches, getBatches }) {
     const dispatch = useDispatch();
     const [show, setShow] = useState(false);
     const [error, setError] = useState('');
@@ -80,10 +80,13 @@ function ModelExportProduct({ idProduct }) {
             });
             if (willCreate) {
                 try {
-                    const response = await exportProduct(idProduct, quantity);
+                    console.log("idProduct ", idProduct, " codeBatches ", codeBatches, " quantity ", quantity)
+                    const response = await exportProduct(idProduct, codeBatches, quantity);
                     if (response && response.status === 200) {
                         swal('Thành công', 'Sản phẩm đã được xuất hủy thành công!', 'success');
                         dispatch(fetchAllProductProductDetail());
+                        getBatches()
+
                     } else {
                         swal('Thất bại', 'Không thể xuất hủy sản phẩm. Vui lòng thử lại.', 'error');
                     }

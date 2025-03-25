@@ -194,7 +194,7 @@ const TableProductUpdate = ({ selectedProductIds, setSelectedProductIds }) => {
                                     <td>{index + 1 + (currentPage - 1) * 3}</td>
                                     <td><ListImageProduct id={item?.idProduct} maxWidth={'100px'} maxHeight={'100px'} /></td>
                                     <td>{item.nameProduct}</td>
-                                    <td>{item.quantityProduct} {item.baseUnit}</td>
+                                    <td>{item.quantityProduct} ({item.baseUnit})</td>
                                     <td>
                                         <InputGroup className="mb-3">
                                             <Form.Control

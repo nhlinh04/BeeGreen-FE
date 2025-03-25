@@ -15,7 +15,7 @@ import './ModelCreateProduct.scss';
 const initialProductState = {
     name: '',
     pricePerBaseUnit: '',
-    quantity: '',
+    // quantity: '',
     baseUnit: '',
     idCategory: '',
     listImages: [],
@@ -60,14 +60,14 @@ const ModelCreateProduct = () => {
             toast.error('Giá là số dương')
             return false;
         }
-        if (!productData.quantity.replace(/\./g, "")) {
-            toast.error('Số lượng là bắt buộc')
-            return false;
-        }
-        if (isNaN(productData.quantity.replace(/\./g, "")) || Number(productData.quantity.replace(/\./g, "")) <= 0) {
-            toast.error('Số lượng là số dương')
-            return false;
-        }
+        // if (!productData.quantity.replace(/\./g, "")) {
+        //     toast.error('Số lượng là bắt buộc')
+        //     return false;
+        // }
+        // if (isNaN(productData.quantity.replace(/\./g, "")) || Number(productData.quantity.replace(/\./g, "")) <= 0) {
+        //     toast.error('Số lượng là số dương')
+        //     return false;
+        // }
         if (Array.isArray(productData.image) && productData.image.length === 0) {
             toast.error('Ảnh sản phẩm là bắt buộc')
             return false;
@@ -113,7 +113,7 @@ const ModelCreateProduct = () => {
             const newProduct = {
                 name: product.name,
                 pricePerBaseUnit: product.pricePerBaseUnit.replace(/\./g, ""),
-                quantity: product.quantity,
+                // quantity: product.quantity,
                 baseUnit: product.baseUnit,
                 idCategory: product.idCategory,
                 listImages: product.listImages,

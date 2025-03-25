@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
 import './ModelDetailProduct.scss';
 import InfoProduct from './InfoProduct';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { findProductByIdProduct } from '../../../../../../redux/action/productAction'
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import AuthGuard from "../../../../../auth/AuthGuard";
 import RoleBasedGuard from "../../../../../auth/RoleBasedGuard";
 import ModelDetailUntis from "./ModelDetailUntis";
+import TableBatches from "./TableBatches";
 const ModelDetailProduct = () => {
     const dispatch = useDispatch();
     const [searchParams] = useSearchParams();
@@ -38,6 +38,9 @@ const ModelDetailProduct = () => {
                     <div className="model-create-product-sizecolor p-3 m-3">
                         <h4 className="text-center p-3">Thông tin đơn vị quy đổi</h4>
                         <ModelDetailUntis idProduct={idProduct} />
+                    </div>
+                    <div className="model-create-product-sizecolor p-3 m-3">
+                        <TableBatches product={product} />
                     </div>
                 </div>
             </RoleBasedGuard>

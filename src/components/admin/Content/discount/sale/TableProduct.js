@@ -188,7 +188,7 @@ const TableProduct = ({ selectedProductIds, setSelectedProductIds }) => {
                                     <td>{index + 1 + (currentPage - 1) * 3}</td>
                                     <td><ListImageProduct id={item?.id} maxWidth={'100px'} maxHeight={'100px'} /></td>
                                     <td>{item.name}</td>
-                                    <td>{item.quantity} {item.baseUnit}</td>
+                                    <td>{item.quantity} ({item.baseUnit})</td>
                                     <td>
                                         <InputGroup className="mb-3">
                                             <Form.Control
