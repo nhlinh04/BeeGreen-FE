@@ -10,8 +10,8 @@ import { updateStatusProductById } from '../../../../../redux/action/productActi
 import { Link } from 'react-router-dom';
 import { FaPenToSquare } from "react-icons/fa6";
 import ListImageProduct from '../../../../../image/ListImageProduct';
-import ModelExportProduct from './ModelExportProduct'
 import ModalProductHistory from './ModalProductHistory'
+import ModelBatches from './ModelBatches'
 const NotFoundData = '/NotFoundData.png';
 const TableShoe = ({ currentPage, setCurrentPage }) => {
     const dispatch = useDispatch();
@@ -114,6 +114,7 @@ const TableShoe = ({ currentPage, setCurrentPage }) => {
                                 </td>
                                 <td className="text-center align-middle">
                                     <div className="d-flex justify-content-start justify-content-center align-items-center">
+                                        <ModelBatches product={item} />
                                         <Link to={`/admins/manage-detail-product?idProduct=${item.id}`} className="mx-2">
                                             <Button variant='warning'>
                                                 <IoIosEye />
@@ -124,7 +125,6 @@ const TableShoe = ({ currentPage, setCurrentPage }) => {
                                                 <FaPenToSquare />
                                             </Button>
                                         </Link>
-                                        <ModelExportProduct idProduct={item.id} />
                                         <ModalProductHistory idProduct={item.id} />
                                     </div>
                                 </td>

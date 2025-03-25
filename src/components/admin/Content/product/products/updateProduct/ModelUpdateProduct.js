@@ -13,12 +13,14 @@ import InfoProduct from './InfoProduct';
 import ModelUpdateUntis from './ModelUpdateUntis';
 import './ModelUpdateProduct.scss';
 import { findListImageByIdProduct } from '../../../../../../Service/ApiProductImage';
+import TableBatches from "./TableBatches";
+import { findBatchesByIdProduct } from '../../../../../../Service/ApiBatchesService';
 // Initial state cho product
 const initialProductState = {
     id: null,
     name: '',
     pricePerBaseUnit: '',
-    quantity: '',
+    // quantity: '',
     baseUnit: '',
     idCategory: '',
     listImages: [],
@@ -31,6 +33,7 @@ const ModelUpdateProduct = () => {
 
     const idProduct = searchParams.get('idProduct');
     const productOld = useSelector((state) => state.product.product);
+    const [listBatches, setListBatches] = useState([]);
     const [images, setImages] = useState([]);
     const [product, setProduct] = useState(initialProductState);
     const [idProductUnits, setIdProductUnits] = useState([]);
@@ -49,6 +52,7 @@ const ModelUpdateProduct = () => {
             getData(idProduct);
             findProductUnits();
             fetchImage();
+
         }
 
     }, [dispatch, idProduct]);
@@ -59,13 +63,28 @@ const ModelUpdateProduct = () => {
                 id: productOld.id,
                 name: productOld.name,
                 pricePerBaseUnit: formatNumber(String(productOld.pricePerBaseUnit)),
-                quantity: productOld.quantity,
+                // quantity: productOld.quantity,
                 baseUnit: productOld.baseUnit,
                 idCategory: productOld.idCategory,
                 listImages: [],
             });
+            if (productOld.id) {
+                getBatches();
+            }
         }
     }, [productOld]);
+    const getBatches = async () => {
+        try {
+            console.log(productOld)
+            const request = await findBatchesByIdProduct(productOld.id);
+            if (request.status === 200) {
+                setListBatches(request.data || []); // Ensure we always set an array
+            }
+        } catch (error) {
+            console.error("Lỗi dữ liệu lô!", error);
+            setListBatches([]); // Set empty array on error
+        }
+    };
     const formatNumber = (value) => {
         if (!value) return '';
         const cleanValue = value.replace(/[^0-9]/g, '');
@@ -132,15 +151,15 @@ const ModelUpdateProduct = () => {
             return false;
         }
 
-        const quantityStr = productData.quantity;
-        if (!quantityStr) {
-            toast.error('Số lượng là bắt buộc');
-            return false;
-        }
-        if (isNaN(quantityStr) || Number(quantityStr) <= 0) {
-            toast.error('Số lượng phải là số dương');
-            return false;
-        }
+        // const quantityStr = productData.quantity;
+        // if (!quantityStr) {
+        //     toast.error('Số lượng là bắt buộc');
+        //     return false;
+        // }
+        // if (isNaN(quantityStr) || Number(quantityStr) <= 0) {
+        //     toast.error('Số lượng phải là số dương');
+        //     return false;
+        // }
 
         setFormErrors(errors);
         return true;
@@ -184,7 +203,7 @@ const ModelUpdateProduct = () => {
                 id: product.id,
                 name: product.name,
                 pricePerBaseUnit: String(product.pricePerBaseUnit).replace(/\./g, ""),
-                quantity: product.quantity,
+                // quantity: product.quantity,
                 baseUnit: product.baseUnit,
                 idCategory: product.idCategory,
                 listImages: product.listImages,
@@ -241,6 +260,9 @@ const ModelUpdateProduct = () => {
                     </div>
                     <div className="model-create-product-sizecolor p-3 m-3">
                         {productUnits && <ModelUpdateUntis productUnits={productUnits} setProductUnits={setProductUnits} formErrors={formErrors} idProductUnits={idProductUnits} setIdProductUnits={setIdProductUnits} />}
+                    </div>
+                    <div className="model-create-product-sizecolor p-3 m-3">
+                        <TableBatches product={product} listBatches={listBatches} setListBatches={setListBatches} getBatches={getBatches} />
                     </div>
                 </div>
             </RoleBasedGuard>

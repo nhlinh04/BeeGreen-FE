@@ -13,7 +13,7 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
         setProduct({
             name: '',
             pricePerBaseUnit: '',
-            quantity: '',
+            // quantity: '',
             baseUnit: '',
             idCategory: '',
             listImages: []
@@ -51,7 +51,7 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
             name: "Tên sản phẩm",
             baseUnit: "Đơn vị gốc sản phẩm",
             pricePerBaseUnit: "Giá sản phẩm",
-            quantity: "Số lượng sản phẩm",
+            // quantity: "Số lượng sản phẩm",
             idCategory: "Danh mục",
             previewImage: "Vui lòng upload hình ảnh",
         };
@@ -61,23 +61,25 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
         if (fieldName in errorMessages) {
             if (fieldName === "pricePerBaseUnit") {
                 errors[fieldName] = fieldValue.trim() ? null : errorMessages[fieldName] + " là bắt buộc";
-            } else if (fieldName === "quantity") {
-                const numericValue = parseNumber(fieldValue);
-                const num = Number(numericValue);
-                if (!numericValue) {
-                    errors[fieldName] = errorMessages[fieldName] + " là bắt buộc";
-                } else if (!num) {
-                    if (isNaN(num)) {
-                        errors[fieldName] = "Số lượng phải là một số hợp lệ";
-                    } else if (num < 1) {
-                        errors[fieldName] = "Số lượng phải lớn hơn hoặc bằng 1";
-                    } else if (num > 100000) {
-                        errors[fieldName] = "Số lượng không được vượt quá 100.000";
-                    }
-                } else {
-                    errors[fieldName] = null;
-                }
-            } else if (fieldName === "idCategory") {
+            }
+            //  else if (fieldName === "quantity") {
+            //     const numericValue = parseNumber(fieldValue);
+            //     const num = Number(numericValue);
+            //     if (!numericValue) {
+            //         errors[fieldName] = errorMessages[fieldName] + " là bắt buộc";
+            //     } else if (!num) {
+            //         if (isNaN(num)) {
+            //             errors[fieldName] = "Số lượng phải là một số hợp lệ";
+            //         } else if (num < 1) {
+            //             errors[fieldName] = "Số lượng phải lớn hơn hoặc bằng 1";
+            //         } else if (num > 100000) {
+            //             errors[fieldName] = "Số lượng không được vượt quá 100.000";
+            //         }
+            //     } else {
+            //         errors[fieldName] = null;
+            //     }
+            // }
+             else if (fieldName === "idCategory") {
                 // Chỉ kiểm tra xem đã chọn danh mục hay chưa
                 errors[fieldName] = fieldValue ? null : "Vui lòng chọn danh mục";
             } else {
@@ -104,18 +106,20 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
                 ...prev,
                 ...newError,
             }));
-        } else if (name === 'quantity') {
-            setProduct((prev) => ({
-                ...prev,
-                [name]: value,
-            }));
+        } 
+        // else if (name === 'quantity') {
+        //     setProduct((prev) => ({
+        //         ...prev,
+        //         [name]: value,
+        //     }));
 
-            const newError = validateForm(name, value);
-            setFormErrors((prev) => ({
-                ...prev,
-                ...newError,
-            }));
-        } else {
+        //     const newError = validateForm(name, value);
+        //     setFormErrors((prev) => ({
+        //         ...prev,
+        //         ...newError,
+        //     }));
+        // } 
+        else {
             setProduct((prev) => ({
                 ...prev,
                 [name]: value,
@@ -144,18 +148,20 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
                 ...prev,
                 ...newError,
             }));
-        } else if (name === 'quantity') {
-            setProduct((prev) => ({
-                ...prev,
-                [name]: value,
-            }));
+        } 
+        // else if (name === 'quantity') {
+        //     setProduct((prev) => ({
+        //         ...prev,
+        //         [name]: value,
+        //     }));
 
-            const newError = validateForm(name, value);
-            setFormErrors((prev) => ({
-                ...prev,
-                ...newError,
-            }));
-        } else {
+        //     const newError = validateForm(name, value);
+        //     setFormErrors((prev) => ({
+        //         ...prev,
+        //         ...newError,
+        //     }));
+        // } 
+        else {
             setProduct((prev) => ({
                 ...prev,
                 [name]: value,
@@ -294,7 +300,7 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
                 </Form.Control.Feedback>
             </Form.Group>
             <Row>
-                <Col className="m-3">
+                {/* <Col className="m-3">
                     <Form.Group>
                         <Form.Label>Số lượng:</Form.Label>
                         <Form.Control
@@ -310,7 +316,7 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
                             {formErrors.quantity}
                         </Form.Control.Feedback>
                     </Form.Group>
-                </Col>
+                </Col> */}
                 <Col className="m-3">
                     <Form.Group>
                         <Form.Label>Giá sản phẩm:</Form.Label>
