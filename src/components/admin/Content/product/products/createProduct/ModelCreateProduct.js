@@ -117,6 +117,7 @@ const ModelCreateProduct = () => {
                 baseUnit: product.baseUnit,
                 idCategory: product.idCategory,
                 listImages: product.listImages,
+                description: product.description,
             };
 
             // Validate before submit

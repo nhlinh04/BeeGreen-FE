@@ -3,6 +3,8 @@ import { Form, Container, Row, Col } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAllCategory } from '../../../../../../redux/action/categoryAction';
 import ListImageProduct from '../../../../../../image/ListImageProduct';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 const InfoProduct = ({ product }) => {
     const dispatch = useDispatch();
     const categorys = useSelector((state) => state.category.listCategory);
@@ -10,6 +12,8 @@ const InfoProduct = ({ product }) => {
     useEffect(() => {
         dispatch(fetchAllCategory());
     }, [dispatch]);
+
+
 
     return (
         <Container fluid>
@@ -81,12 +85,30 @@ const InfoProduct = ({ product }) => {
                 </Col>
             </Row>
 
-            <input
-                type="file"
-                id="uploadFileInput"
-                style={{ display: "none" }}
-                disabled
-            />
+            <Row>
+                <Col className="m-3">
+                    <Form.Label>Mô tả sản phẩm:</Form.Label>
+                    <ReactQuill
+                        theme="snow"
+                        value={product.description}
+                        readOnly={true} // Chỉ hiển thị, không chỉnh sửa
+                        modules={{ toolbar: false }} // Ẩn thanh công cụ
+                        style={{ minHeight: "100px", maxHeight: "none", backgroundColor: "#f8f9fa", overflow: "hidden" }}
+                    />
+                </Col>
+            </Row>
+            <Row>
+                <Form.Group className="m-3">
+                    <input
+                        type="file"
+                        id="uploadListFiles"
+                        accept="image/*"
+                        style={{ display: "none" }}
+                        multiple
+                    />
+                </Form.Group>
+            </Row>
+
             <Row
                 className="preview-image justify-content-center text-center p-3"
                 style={{

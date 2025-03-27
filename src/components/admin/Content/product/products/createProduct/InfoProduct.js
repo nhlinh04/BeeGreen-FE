@@ -3,6 +3,8 @@ import { Form, Container, Row, Col, Button } from 'react-bootstrap';
 import uploadFile from './pngegg.png'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAllCategoryActive } from '../../../../../../redux/action/categoryAction';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSubmitCreate }) => {
     const dispatch = useDispatch();
@@ -16,12 +18,20 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
             // quantity: '',
             baseUnit: '',
             idCategory: '',
-            listImages: []
+            listImages: [],
+            description: ''
         });
 
         setListImage({
             previewImages: []
         });
+    };
+
+    const handleDescriptionChange = (content) => {
+        setProduct((prev) => ({
+            ...prev,
+            description: content,
+        }));
     };
 
     const categorys = useSelector((state) => state.category.listCategory);
@@ -79,7 +89,7 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
             //         errors[fieldName] = null;
             //     }
             // }
-             else if (fieldName === "idCategory") {
+            else if (fieldName === "idCategory") {
                 // Chỉ kiểm tra xem đã chọn danh mục hay chưa
                 errors[fieldName] = fieldValue ? null : "Vui lòng chọn danh mục";
             } else {
@@ -106,7 +116,7 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
                 ...prev,
                 ...newError,
             }));
-        } 
+        }
         // else if (name === 'quantity') {
         //     setProduct((prev) => ({
         //         ...prev,
@@ -148,7 +158,7 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
                 ...prev,
                 ...newError,
             }));
-        } 
+        }
         // else if (name === 'quantity') {
         //     setProduct((prev) => ({
         //         ...prev,
@@ -376,14 +386,31 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
                     </Form.Group>
                 </Col>
             </Row>
-            <Form.Control
-                type="file"
-                id="uploadListFiles"
-                accept="image/*"
-                style={{ display: "none" }}
-                multiple
-                onChange={handleFileChange}
-            />
+            <Row>
+                <Col className="m-3">
+                    <Form.Label>Mô tả sản phẩm:</Form.Label>
+                    <ReactQuill
+                        theme="snow"
+                        value={product.description}
+                        onChange={handleDescriptionChange}
+                        style={{ height: "200px", minHeight: "200px", marginBottom: "20px" }}
+                    />
+                </Col>
+            </Row>
+            <Row>
+                <Form.Group className="m-3">
+                    <input
+                        type="file"
+                        id="uploadListFiles"
+                        accept="image/*"
+                        style={{ display: "none" }}
+                        multiple
+                        onChange={handleFileChange}
+                    />
+                </Form.Group>
+            </Row>
+
+
             <Row
                 className="preview-image justify-content-center text-center p-3"
                 style={{

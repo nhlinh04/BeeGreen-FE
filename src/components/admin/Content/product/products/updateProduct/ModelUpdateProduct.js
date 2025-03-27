@@ -24,6 +24,7 @@ const initialProductState = {
     baseUnit: '',
     idCategory: '',
     listImages: [],
+    description: ''
 };
 
 const ModelUpdateProduct = () => {
@@ -67,6 +68,7 @@ const ModelUpdateProduct = () => {
                 baseUnit: productOld.baseUnit,
                 idCategory: productOld.idCategory,
                 listImages: [],
+                description: productOld.description
             });
             if (productOld.id) {
                 getBatches();
@@ -207,6 +209,7 @@ const ModelUpdateProduct = () => {
                 baseUnit: product.baseUnit,
                 idCategory: product.idCategory,
                 listImages: product.listImages,
+                description: product.description
             };
             const updateProductRequest = {
                 productRequest: { ...updateProduct, productUnits },
