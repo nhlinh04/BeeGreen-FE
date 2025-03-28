@@ -34,6 +34,9 @@ import ModelCreateVoucher from "./components/admin/Content/discount/voucher/Mode
 import ModelUpdateVoucher from "./components/admin/Content/discount/voucher/ModelUpdateVoucher";
 import ModelDetailVoucher from "./components/admin/Content/discount/voucher/ModelDetailVoucher";
 import ManageCategory from "./components/admin/Content/product/category/ManageCategory";
+import Benefit from "./components/page/home/post/Benefit"; 
+import Science from "./components/page/home/post/Science"; 
+import TheBestVegetables from "./components/page/home/post/TheBestVegetables"; 
 
 import ManageProduct from "./components/admin/Content/product/products/ManageProduct";
 import ModelCreateProduct from "./components/admin/Content/product/products/createProduct/ModelCreateProduct";
@@ -72,6 +75,9 @@ root.render(
             <Route path="/blog/SizeNu" element={<SizeNu />} />
             <Route path="/Page403" element={<Page403 />} />
             <Route path="/Policy" element={<Policy />} />
+            <Route path="/loi-ich-cua-rau-xanh" element={<Benefit />} />
+            <Route path="/nhung-loai-rau-tot-nhat" element={<TheBestVegetables />} />
+            <Route path="/nghien-cuu-khoa-hoc" element={<Science />} />
 
           </Route>
           <Route path="/admins" element={<Admin />}>
