@@ -65,7 +65,7 @@ function ModelBatches({ product }) {
 
             const willCreate = await swal({
                 title: 'Xác nhận',
-                text: 'Bạn có chắc chắn muốn xuất hủy sản phẩm này không?',
+                text: 'Bạn có chắc muốn thêm lô hàng mới?',
                 icon: 'warning',
                 buttons: ['Hủy', 'Đồng ý'],
                 dangerMode: true,
@@ -75,19 +75,19 @@ function ModelBatches({ product }) {
                 try {
                     const response = await createBatches(batchesRequest);
                     if (response && response.status === 200) {
-                        swal('Thành công', 'Sản phẩm đã được xuất hủy thành công!', 'success');
+                        swal('Thành công', 'Lô hàng đã được thêm thành công!', 'success');
                         dispatch(fetchAllProductProductDetail());
                         resetForm();
                         handleClose();
                     } else {
-                        swal('Thất bại', 'Không thể xuất hủy sản phẩm. Vui lòng thử lại.', 'error');
+                        swal('Thất bại', 'Không thể thêm lô hàng. Vui lòng thử lại.', 'error');
                     }
                 } catch (error) {
-                    swal('Thất bại', 'Không thể xuất hủy sản phẩm. Vui lòng thử lại.', 'error');
+                    swal('Thất bại', 'Không thể thêm lô hàng. Vui lòng thử lại.', 'error');
                 }
             }
         } catch (error) {
-            toast.error("Lỗi khi xử lý xuất hủy. Vui lòng thử lại sau.");
+            toast.error("Lỗi khi xử lý thêm lô. Vui lòng thử lại sau.");
         }
     };
 
