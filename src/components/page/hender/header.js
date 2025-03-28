@@ -71,7 +71,7 @@ function Header() {
                     <Nav>
                         {account ? (
                             <Dropdown align="end">
-                                <Dropdown.Toggle as="a" href="#" className="d-flex text-dark align-items-center">
+                                <Dropdown.Toggle as="a" className="d-flex text-dark align-items-center">
                                     <p style={{ fontSize: '16px' }} className="m-0">Hi, {account.name}</p>
                                     <img
                                         src={account.avatar || "https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"}

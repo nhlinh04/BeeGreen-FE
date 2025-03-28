@@ -226,6 +226,11 @@ function ProductDetail() {
                     max={getMaxQuantity()}
                     value={quantity}
                     onChange={handleQuantityChange}
+                    onKeyDown={(e) => {
+                      if (e.key === "." || e.key === "," || e.key === "e") {
+                        e.preventDefault();
+                      }
+                    }}
                     className="form-control w-25"
                     disabled={!selectedProductUnit || product.quantity < selectedProductUnit.conversionFactor}
                   />
