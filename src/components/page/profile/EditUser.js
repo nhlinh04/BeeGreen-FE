@@ -13,7 +13,7 @@ import { Formik } from "formik";
 import { getAccountLogin } from '../../../Service/ApiAccountService';
 
 const EditUserInfoForm = ({ idCustomer, onSuccess }) => {
-    
+
     const dispatch = useDispatch();
     const accountDetail = useSelector((state) => state.account.accountDetail);
     const [show, setShow] = useState(false);
@@ -45,7 +45,7 @@ const EditUserInfoForm = ({ idCustomer, onSuccess }) => {
             .matches(/^[A-Za-zÀ-ỹ\s]+$/, "Tên không được chứa số hoặc ký tự đặc biệt"),
         phoneNumber: yup.string()
             .required("Số điện thoại là bắt buộc")
-            .matches(/^0[0-9]{9,10}$/, "Số điện thoại phải bắt đầu bằng số 0 và có từ 10 đến 11 số"),
+            .matches(/^0\d{9}$/, "Số điện thoại phải bắt đầu bằng số 0 và có đúng 10 số"),
         gender: yup.string().required("Giới tính là bắt buộc"),
         birthday: yup.date().required("Ngày sinh là bắt buộc").max(minAge, "Bạn phải ít nhất 18 tuổi"),
     });

@@ -133,6 +133,15 @@ function ModelCreateVoucher() {
       toast.error("Tên phiếu giảm giá không hợp lệ.");
       return false;
     }
+    if (
+      !voucherDetails.note ||
+      /^[\s]*$/.test(voucherDetails.note) ||
+      voucherDetails.note.length > 255 ||
+      !/^[A-Za-zÀ-ỹ0-9\s]+$/.test(voucherDetails.note)
+    ) {
+      toast.error("Ghi chú phiếu giảm giá không hợp lệ.");
+      return false;
+    }
 
     if (
       !voucherDetails.isPrivate &&
@@ -173,7 +182,7 @@ function ModelCreateVoucher() {
       parseFloat(voucherDetails.maximumDiscount) <= 1000 ||
       parseFloat(voucherDetails.maximumDiscount) > 2000000 ||
       parseFloat(voucherDetails.maximumDiscount) >
-        parseFloat(voucherDetails.minBillValue)
+      parseFloat(voucherDetails.minBillValue)
     ) {
       toast.error(
         "Giảm giá tối đa không hợp lệ (phải nằm trong khoảng từ 1,000 VND đến 2,000,000 VND và nhỏ hơn giá trị đơn hàng tối thiểu)."
@@ -239,11 +248,11 @@ function ModelCreateVoucher() {
             • Tên phiếu giảm giá: <strong>${discountName}</strong><br>
             • Giá trị giảm: <strong>${discountValue}%</strong><br>
             • Giá trị đơn hàng tối thiểu: <strong>${formatCurrency(
-              minOrderValue
-            )}</strong><br>
+          minOrderValue
+        )}</strong><br>
             • Ngày hết hạn: <strong>${new Date(
-              expirationDate
-            ).toLocaleDateString("vi-VN")}</strong><br>
+          expirationDate
+        ).toLocaleDateString("vi-VN")}</strong><br>
           Quý khách có thể sử dụng phiếu giảm giá này cho các đơn hàng mua sắm tại ${websiteUrl} từ ${new Date(
           startDate
         ).toLocaleDateString("vi-VN")} đến ${new Date(
@@ -403,7 +412,7 @@ function ModelCreateVoucher() {
                         }
                       />
                       {!voucherDetails.name ||
-                      /^[\s]*$/.test(voucherDetails.name) ? (
+                        /^[\s]*$/.test(voucherDetails.name) ? (
                         <Form.Control.Feedback type="invalid">
                           Tên phiếu giảm giá là bắt buộc.
                         </Form.Control.Feedback>
@@ -503,8 +512,8 @@ function ModelCreateVoucher() {
                           value={
                             voucherDetails.minBillValue
                               ? Number(
-                                  voucherDetails.minBillValue
-                                ).toLocaleString("vi-VN")
+                                voucherDetails.minBillValue
+                              ).toLocaleString("vi-VN")
                               : ""
                           }
                           onChange={handleChange}
@@ -519,10 +528,10 @@ function ModelCreateVoucher() {
                           {!voucherDetails.minBillValue
                             ? "Giá trị đơn hàng tối thiểu là bắt buộc."
                             : parseFloat(voucherDetails.minBillValue) <= 1000
-                            ? "Giá trị đơn hàng tối thiểu phải từ 1,000 VND."
-                            : parseFloat(voucherDetails.minBillValue) > 10000000
-                            ? "Giá trị đơn hàng tối thiểu không được vượt quá 10,000,000 VND."
-                            : ""}
+                              ? "Giá trị đơn hàng tối thiểu phải từ 1,000 VND."
+                              : parseFloat(voucherDetails.minBillValue) > 10000000
+                                ? "Giá trị đơn hàng tối thiểu không được vượt quá 10,000,000 VND."
+                                : ""}
                         </Form.Control.Feedback>
                       </InputGroup>
                     </Form.Group>
@@ -541,8 +550,8 @@ function ModelCreateVoucher() {
                           value={
                             voucherDetails.type === "1"
                               ? Number(voucherDetails.value).toLocaleString(
-                                  "vi-VN"
-                                )
+                                "vi-VN"
+                              )
                               : voucherDetails.value
                           }
                           onChange={handleChange}
@@ -552,7 +561,7 @@ function ModelCreateVoucher() {
                               (voucherDetails.value < 1 ||
                                 voucherDetails.value > 2000000 ||
                                 voucherDetails.value >
-                                  voucherDetails.minBillValue)) ||
+                                voucherDetails.minBillValue)) ||
                             (voucherDetails.type === "0" &&
                               (voucherDetails.value < 1 ||
                                 voucherDetails.value > 99)) ||
@@ -585,7 +594,7 @@ function ModelCreateVoucher() {
                               )}
                             {voucherDetails.type === "1" &&
                               voucherDetails.value >
-                                voucherDetails.minBillValue && (
+                              voucherDetails.minBillValue && (
                                 <Form.Control.Feedback type="invalid">
                                   Giá trị không được lớn hơn giá trị đơn hàng
                                   tối thiểu.
@@ -625,34 +634,34 @@ function ModelCreateVoucher() {
                           value={
                             voucherDetails.maximumDiscount
                               ? Number(
-                                  voucherDetails.maximumDiscount
-                                ).toLocaleString("vi-VN")
+                                voucherDetails.maximumDiscount
+                              ).toLocaleString("vi-VN")
                               : ""
                           }
                           onChange={handleChange}
                           isInvalid={
                             !voucherDetails.maximumDiscount ||
                             parseFloat(voucherDetails.maximumDiscount) <=
-                              1000 ||
+                            1000 ||
                             parseFloat(voucherDetails.maximumDiscount) >
-                              2000000 ||
+                            2000000 ||
                             parseFloat(voucherDetails.maximumDiscount) >
-                              parseFloat(voucherDetails.minBillValue)
+                            parseFloat(voucherDetails.minBillValue)
                           }
                         />
                         <InputGroup.Text>VND</InputGroup.Text>
                         {voucherDetails.type !== "1" && (
                           <Form.Control.Feedback type="invalid">
                             {!voucherDetails.maximumDiscount ||
-                            parseFloat(voucherDetails.maximumDiscount) <= 1000
+                              parseFloat(voucherDetails.maximumDiscount) <= 1000
                               ? "Giảm giá tối đa phải lớn hơn 1,000 VND."
                               : parseFloat(voucherDetails.maximumDiscount) >
                                 2000000
-                              ? "Giảm giá tối đa không được vượt quá 2,000,000 VND."
-                              : parseFloat(voucherDetails.maximumDiscount) >
-                                parseFloat(voucherDetails.minBillValue)
-                              ? "Giảm giá tối đa không được lớn hơn giá trị đơn hàng tối thiểu."
-                              : ""}
+                                ? "Giảm giá tối đa không được vượt quá 2,000,000 VND."
+                                : parseFloat(voucherDetails.maximumDiscount) >
+                                  parseFloat(voucherDetails.minBillValue)
+                                  ? "Giảm giá tối đa không được lớn hơn giá trị đơn hàng tối thiểu."
+                                  : ""}
                           </Form.Control.Feedback>
                         )}
                       </InputGroup>
@@ -695,7 +704,7 @@ function ModelCreateVoucher() {
                         isInvalid={
                           !voucherDetails.endAt ||
                           new Date(voucherDetails.endAt) <=
-                            new Date(voucherDetails.startAt) ||
+                          new Date(voucherDetails.startAt) ||
                           new Date(voucherDetails.endAt) <= new Date()
                         }
                       />
@@ -704,8 +713,8 @@ function ModelCreateVoucher() {
                           ? "Ngày kết thúc là bắt buộc."
                           : new Date(voucherDetails.endAt) <=
                             new Date(voucherDetails.startAt)
-                          ? "Ngày kết thúc phải sau ngày bắt đầu."
-                          : "Ngày kết thúc phải lớn hơn ngày hiện tại."}
+                            ? "Ngày kết thúc phải sau ngày bắt đầu."
+                            : "Ngày kết thúc phải lớn hơn ngày hiện tại."}
                       </Form.Control.Feedback>
                     </Form.Group>
                   </div>

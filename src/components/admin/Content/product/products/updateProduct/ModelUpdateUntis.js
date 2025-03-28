@@ -29,7 +29,7 @@ const ModelCreateUnit = ({ productUnits, setProductUnits, idProductUnits, setIdP
 
     // Hàm thêm mới một product unit
     const handleAddUnit = () => {
-        setProductUnits([...productUnits, { id: null, unitName: '', conversionFactor: '', type: false }]);
+        setProductUnits([...productUnits, { id: null, unitName: '', conversionFactor: '', type: true }]);
         setErrors([...errors, {}]);
     };
 
