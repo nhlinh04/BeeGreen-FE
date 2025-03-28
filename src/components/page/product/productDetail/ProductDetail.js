@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
-import { BsCheck } from 'react-icons/bs';
-import ListImageProduct from '../../../../image/ListImageProduct';
-import { findProduct } from '../../../../redux/action/productAction';
-import { addProductToCart } from '../../../../Service/ApiCartSevice';
-import { getAccountLogin } from '../../../../Service/ApiAccountService';
-import { initialize } from '../../../../redux/action/authAction';
-import { addToCartLocal } from '../../../managerCartLocal/CartManager';
-import { findProductResponseByIdAndType } from '../../../../Service/ApiProductUnitsService';
-import './ProductDetail.scss';
+import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { BsCheck } from "react-icons/bs";
+import ListImageProduct from "../../../../image/ListImageProduct";
+import { findProduct } from "../../../../redux/action/productAction";
+import { addProductToCart } from "../../../../Service/ApiCartSevice";
+import { getAccountLogin } from "../../../../Service/ApiAccountService";
+import { initialize } from "../../../../redux/action/authAction";
+import { addToCartLocal } from "../../../managerCartLocal/CartManager";
+import { findProductResponseByIdAndType } from "../../../../Service/ApiProductUnitsService";
+import "./ProductDetail.scss";
+import SuggestPage from "./SuggestPage";
+
 
 function ProductDetail() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-  const idProduct = searchParams.get('idProduct');
+  const idProduct = searchParams.get("idProduct");
   const product = useSelector((state) => state.product.product || {});
   const [productUnits, setProductUnits] = useState([]);
   const [selectedProductUnit, setSelectedProductUnit] = useState(null);
@@ -28,9 +30,12 @@ function ProductDetail() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        await Promise.all([dispatch(findProduct(idProduct)), findProductUnits()]);
+        await Promise.all([
+          dispatch(findProduct(idProduct)),
+          findProductUnits(),
+        ]);
       } catch (error) {
-        toast.error('Lỗi khi tải dữ liệu sản phẩm');
+        toast.error("Lỗi khi tải dữ liệu sản phẩm");
       } finally {
         setIsLoading(false);
       }
@@ -47,17 +52,17 @@ function ProductDetail() {
           setSelectedProductUnit(response.data[0]); // Chọn unit đầu tiên mặc định
         }
       } else {
-        toast.error('Lỗi khi tải danh sách đơn vị sản phẩm');
+        toast.error("Lỗi khi tải danh sách đơn vị sản phẩm");
       }
     } catch (error) {
-      toast.error(error.message || 'Lỗi khi tải danh sách đơn vị sản phẩm');
+      toast.error(error.message || "Lỗi khi tải danh sách đơn vị sản phẩm");
     }
   };
 
   // Format currency
   const formatCurrency = (value) => {
     const roundedValue = Math.round(value || 0);
-    return roundedValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return roundedValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   // Handle selecting a product unit
@@ -95,33 +100,33 @@ function ProductDetail() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   const addProductToCartLocal = async (orderDetails, quantityProduct) => {
-    addToCartLocal(orderDetails, quantityProduct)
+    addToCartLocal(orderDetails, quantityProduct);
     navigate(`/cart`);
-  }
+  };
   const handleAddProductToCart = async () => {
     try {
       let orderDetails = {
         idProduct: Number(idProduct),
-        quantity: quantity * selectedProductUnit.conversionFactor
-      }
-      const token = localStorage.getItem('accessToken');
+        quantity: quantity * selectedProductUnit.conversionFactor,
+      };
+      const token = localStorage.getItem("accessToken");
       if (!token) {
-        addProductToCartLocal(orderDetails, product?.quantity || 1)
-        dispatch(initialize({ isAuthenticated: false, user: null }))
+        addProductToCartLocal(orderDetails, product?.quantity || 1);
+        dispatch(initialize({ isAuthenticated: false, user: null }));
       } else {
         try {
           let users = await getAccountLogin();
           if (users.status === 200) {
             const data = users.data;
-            await addProductToCartOfAccount(orderDetails, data)
-            dispatch(initialize({ isAuthenticated: true, data }))
+            await addProductToCartOfAccount(orderDetails, data);
+            dispatch(initialize({ isAuthenticated: true, data }));
           } else {
-            dispatch(initialize({ isAuthenticated: false, user: null }))
+            dispatch(initialize({ isAuthenticated: false, user: null }));
           }
         } catch (error) {
-          dispatch(initialize({ isAuthenticated: false, user: null }))
+          dispatch(initialize({ isAuthenticated: false, user: null }));
           console.error(error);
         }
       }
@@ -134,13 +139,13 @@ function ProductDetail() {
   const handlePayNow = async () => {
     let products = {
       idProduct: Number(idProduct),
-      quantity: quantity * selectedProductUnit.conversionFactor
-    }
+      quantity: quantity * selectedProductUnit.conversionFactor,
+    };
     navigate(`/Payment`, {
       state: {
         listProducts: [products],
-        method: false
-      }
+        method: false,
+      },
     });
   };
 
@@ -151,16 +156,16 @@ function ProductDetail() {
       ) : (
         <div className="grid p-5">
           <div className="row">
-            <div className="col-md-6" style={{ overflow: 'hidden' }}>
-              <ListImageProduct
-                id={idProduct}
-              />
+            <div className="col-md-6" style={{ overflow: "hidden" }}>
+              <ListImageProduct id={idProduct} />
             </div>
 
             <div className="product-detail__information col-md-6">
-              <h1 className="product-detail__name">{product.nameProduct || 'N/A'}</h1>
+              <h1 className="product-detail__name">
+                {product.nameProduct || "N/A"}
+              </h1>
               <p className="product-detail__category">
-                Danh mục: {product.nameCategory || 'N/A'}
+                Danh mục: {product.nameCategory || "N/A"}
               </p>
 
               {/* Product pricing */}
@@ -168,20 +173,33 @@ function ProductDetail() {
                 {selectedProductUnit ? (
                   product.priceBase === product.priceSale ? (
                     <h2 className="product-price">
-                      {formatCurrency(product.priceBase * selectedProductUnit.conversionFactor)} VND
+                      {formatCurrency(
+                        product.priceBase * selectedProductUnit.conversionFactor
+                      )}{" "}
+                      VND
                     </h2>
                   ) : (
                     <>
                       <h2 className="product-sale-price text-danger">
-                        {formatCurrency(product.priceSale * selectedProductUnit.conversionFactor)} VND
+                        {formatCurrency(
+                          product.priceSale *
+                            selectedProductUnit.conversionFactor
+                        )}{" "}
+                        VND
                       </h2>
                       <h2 className="product-original-price text-decoration-line-through">
-                        {formatCurrency(product.priceBase * selectedProductUnit.conversionFactor)} VND
+                        {formatCurrency(
+                          product.priceBase *
+                            selectedProductUnit.conversionFactor
+                        )}{" "}
+                        VND
                       </h2>
                     </>
                   )
                 ) : (
-                  <h2 className="product-price">{formatCurrency(product.priceBase)} VND</h2>
+                  <h2 className="product-price">
+                    {formatCurrency(product.priceBase)} VND
+                  </h2>
                 )}
               </div>
 
@@ -194,12 +212,16 @@ function ProductDetail() {
                       <li key={unit.id}>
                         <button
                           type="button"
-                          className={`btn position-relative ${selectedProductUnit?.id === unit.id
-                            ? 'btn-primary'
-                            : 'btn-outline-secondary'
-                            }`}
+                          className={`btn position-relative ${
+                            selectedProductUnit?.id === unit.id
+                              ? "btn-primary"
+                              : "btn-outline-secondary"
+                          }`}
                           onClick={() => handleSelectedProductUnit(unit)}
-                          disabled={unit.status !== 'ACTIVE' || product.quantity < unit.conversionFactor}
+                          disabled={
+                            unit.status !== "ACTIVE" ||
+                            product.quantity < unit.conversionFactor
+                          }
                         >
                           {unit.unitName}
                           {selectedProductUnit?.id === unit.id && (
@@ -232,12 +254,18 @@ function ProductDetail() {
                       }
                     }}
                     className="form-control w-25"
-                    disabled={!selectedProductUnit || product.quantity < selectedProductUnit.conversionFactor}
+                    disabled={
+                      !selectedProductUnit ||
+                      product.quantity < selectedProductUnit.conversionFactor
+                    }
                   />
                   <p className="mb-0">
                     {selectedProductUnit && product.quantity
-                      ? `Còn ${Math.floor(product.quantity / selectedProductUnit.conversionFactor)} sản phẩm (${selectedProductUnit.unitName})`
-                      : 'Hết hàng'}
+                      ? `Còn ${Math.floor(
+                          product.quantity /
+                            selectedProductUnit.conversionFactor
+                        )} sản phẩm (${selectedProductUnit.unitName})`
+                      : "Hết hàng"}
                   </p>
                 </div>
               </div>
@@ -247,7 +275,11 @@ function ProductDetail() {
                 <button
                   type="button"
                   className="btn btn-success flex-fill"
-                  disabled={!selectedProductUnit || quantity < 1 || product.quantity < selectedProductUnit.conversionFactor}
+                  disabled={
+                    !selectedProductUnit ||
+                    quantity < 1 ||
+                    product.quantity < selectedProductUnit.conversionFactor
+                  }
                   onClick={handleAddProductToCart}
                 >
                   Thêm vào giỏ hàng
@@ -255,20 +287,97 @@ function ProductDetail() {
                 <button
                   type="button"
                   className="btn btn-primary flex-fill"
-                  disabled={!selectedProductUnit || quantity < 1 || product.quantity < selectedProductUnit.conversionFactor}
+                  disabled={
+                    !selectedProductUnit ||
+                    quantity < 1 ||
+                    product.quantity < selectedProductUnit.conversionFactor
+                  }
                   onClick={handlePayNow}
                 >
                   Mua ngay
                 </button>
               </div>
-
-              <div className="product-detail__description mt-4">
-                {/* Thêm mô tả sản phẩm nếu cần */}
-              </div>
             </div>
+            {/* Product description */}
+            <div className="product-detail__description mt-4">
+              <h3>
+                {product.nameProduct || "Sản phẩm"} – Tinh túy từ thiên nhiên
+              </h3>
+
+              <p>
+              🔹Xuất xứ: Việt nam
+              </p>
+              <p>
+              🔹Nhà cung cấp: GreenEco
+              </p>
+              <br/>
+              <p>
+                {product.nameProduct || "Sản phẩm"} không chỉ đơn thuần là một
+                loại thực phẩm, mà còn là biểu tượng của sức khỏe và sự tươi
+                ngon. Được tuyển chọn từ những nguồn nông sản chất lượng cao,{" "}
+                {product.nameProduct || "sản phẩm"} mang đến giá trị dinh dưỡng
+                tuyệt vời cho mọi bữa ăn.
+              </p>
+
+              <h4>
+                💚 Vì sao {product.nameProduct || "sản phẩm"} là sự lựa chọn
+                hoàn hảo?
+              </h4>
+              <ul>
+                <li>
+                  ✅ Tươi ngon tự nhiên: Giữ trọn hương vị và dưỡng chất tinh
+                  khiết từ thiên nhiên.
+                </li>
+                <li>
+                  ✅ Giàu vitamin & khoáng chất: Cung cấp dinh dưỡng thiết yếu
+                  giúp cơ thể khỏe mạnh.
+                </li>
+                <li>
+                  ✅ Không hóa chất độc hại: Được trồng và thu hoạch theo quy
+                  trình an toàn, đảm bảo sức khỏe.
+                </li>
+                <li>
+                  ✅ Dễ dàng chế biến: Phù hợp với nhiều món ăn ngon từ salad,
+                  xào, luộc đến làm nước ép.
+                </li>
+              </ul>
+
+              <p>
+                Cho dù bạn đang tìm kiếm một nguồn thực phẩm sạch hay muốn bổ
+                sung dinh dưỡng cho gia đình,{" "}
+                {product.nameProduct || "sản phẩm"} chính là sự lựa chọn không
+                thể bỏ qua.
+              </p>
+
+              <h4>🥗 Gợi ý sử dụng {product.nameProduct || "sản phẩm"}:</h4>
+              <ul>
+                <li>
+                  🔹 Dùng tươi trong các món salad hoặc nước ép để giữ trọn
+                  dưỡng chất.
+                </li>
+                <li>
+                  🔹 Chế biến thành các món xào, luộc, hấp, giúp bữa ăn thêm
+                  phong phú.
+                </li>
+                <li>
+                  🔹 Kết hợp với các nguyên liệu khác để tạo nên công thức nấu
+                  ăn tuyệt vời.
+                </li>
+              </ul>
+
+              <p>
+                <strong>
+                  👉 Trải nghiệm ngay {product.nameProduct || "sản phẩm"} và tận
+                  hưởng sự khác biệt!
+                </strong>
+              </p>
+            </div>
+            
           </div>
+          
         </div>
       )}
+      <SuggestPage/>
     </div>
   );
 }

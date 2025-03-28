@@ -85,7 +85,7 @@ const Content = () => {
           }
         >
           <div>
-            <p className="product-sale-price text-danger truncate-text" >
+            <p className="product-sale-price text-danger truncate-text">
               {formatCurrency(product.priceSale)} VND
             </p>
             <br />
@@ -168,13 +168,13 @@ const Content = () => {
         </div>
 
         {/* Phần sản phẩm mới */}
-        
+
         <div className="slider-sale">
-            <div className="row m-2 ">
+          <div className="row m-2 ">
             <h1 className="text-center col m-3 fw-bold text-uppercase">
-                ĐANG KHUYẾN MÃI
+              ĐANG KHUYẾN MÃI
             </h1>
-            </div>
+          </div>
           <Slider {...settings}>
             {products.map((product) => (
               <Link
@@ -205,37 +205,51 @@ const Content = () => {
           </Slider>
         </div>
 
-<div className="news-section">
-  <h2 className="news-title">📢 Lợi ích của rau xanh đối với sức khỏe</h2>
-  <div className="news-container">
-    
-    {/* Bài viết 1 */}
-    <div className="news-card">
-      <img src="./rau-xanh.jpg" alt="Lợi ích của rau xanh" />
-      <h3>Lợi ích của việc ăn rau xanh mỗi ngày</h3>
-      <p>Rau giúp tăng cường hệ miễn dịch, tốt cho tiêu hóa, hỗ trợ giảm cân...</p>
-      <a href="/loi-ich-cua-rau-xanh" className="read-more">Xem thêm →</a>
-    </div>
+        <div className="news-section">
+          <h2 className="news-title">
+            📢 Lợi ích của rau xanh đối với sức khỏe
+          </h2>
+          <div className="news-container">
+            {/* Bài viết 1 */}
+            <div className="news-card">
+              <img src="./rau-xanh.jpg" alt="Lợi ích của rau xanh" />
+              <h3>Lợi ích của việc ăn rau xanh mỗi ngày</h3>
+              <p>
+                Rau giúp tăng cường hệ miễn dịch, tốt cho tiêu hóa, hỗ trợ giảm
+                cân...
+              </p>
+              <a href="/loi-ich-cua-rau-xanh" className="read-more">
+                Xem thêm →
+              </a>
+            </div>
 
-    {/* Bài viết 2 */}
-    <div className="news-card">
-      <img src="./rau-tot.jpg" alt="Những loại rau tốt nhất" />
-      <h3>Những loại rau tốt nhất cho sức khỏe</h3>
-      <p>Cải bó xôi, bông cải xanh, cà rốt... giúp phòng chống bệnh tật hiệu quả.</p>
-      <a href="/nhung-loai-rau-tot-nhat" className="read-more">Xem thêm →</a>
-    </div>
+            {/* Bài viết 2 */}
+            <div className="news-card">
+              <img src="./rau-tot.jpg" alt="Những loại rau tốt nhất" />
+              <h3>Những loại rau tốt nhất cho sức khỏe</h3>
+              <p>
+                Cải bó xôi, bông cải xanh, cà rốt... giúp phòng chống bệnh tật
+                hiệu quả.
+              </p>
+              <a href="/nhung-loai-rau-tot-nhat" className="read-more">
+                Xem thêm →
+              </a>
+            </div>
 
-    {/* Bài viết 3 */}
-    <div className="news-card">
-      <img src="./khoa-hoc.png" alt="Nghiên cứu khoa học" />
-      <h3>Nghiên cứu khoa học về lợi ích của rau xanh</h3>
-      <p>WHO cảnh báo rằng thiếu rau trong chế độ ăn là nguyên nhân gây ung thư tiêu hóa.</p>
-      <a href="/nghien-cuu-khoa-hoc" className="read-more">Xem thêm →</a>
-    </div>
-
-  </div>
-</div>
-
+            {/* Bài viết 3 */}
+            <div className="news-card">
+              <img src="./khoa-hoc.png" alt="Nghiên cứu khoa học" />
+              <h3>Nghiên cứu khoa học về lợi ích của rau xanh</h3>
+              <p>
+                WHO cảnh báo rằng thiếu rau trong chế độ ăn là nguyên nhân gây
+                ung thư tiêu hóa.
+              </p>
+              <a href="/nghien-cuu-khoa-hoc" className="read-more">
+                Xem thêm →
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
