@@ -205,36 +205,37 @@ const Content = () => {
           </Slider>
         </div>
 
-        <div className="tin-tuc">
-          <h1>tin tức</h1>
-          <div className="centered-container">
-          <Row className="d-flex justify-content-center align-items-center mt-4 mb-4 w-75 flex-wrap">
-            <Col md={6} lg={6} className="px-3">
-              <Card className="text-white text-center border-0 shadow-sm hover-card">
-                <Link to="/allProducts">
-                  <Card.Img
-                    src="./banner-q1.jpg"
-                    alt="Bộ sưu tập Sản phẩm sạch"
-                    className="img-fluid rounded"
-                  />
-                </Link>
-              </Card>
-            </Col>
-            <Col md={6} lg={6} className="px-3">
-              <Card className="text-white text-center border-0 shadow-sm hover-card">
-                <Link to="/allProducts">
-                  <Card.Img
-                    src="./banner-q2.jpg"
-                    alt="Bộ sưu tập Nông sản sạch"
-                    className="img-fluid rounded"
-                  />
-                </Link>
-              </Card>
-            </Col>
-          </Row>
-        </div>
-          
-        </div>
+<div className="news-section">
+  <h2 className="news-title">📢 Lợi ích của rau xanh đối với sức khỏe</h2>
+  <div className="news-container">
+    
+    {/* Bài viết 1 */}
+    <div className="news-card">
+      <img src="./rau-xanh.jpg" alt="Lợi ích của rau xanh" />
+      <h3>Lợi ích của việc ăn rau xanh mỗi ngày</h3>
+      <p>Rau giúp tăng cường hệ miễn dịch, tốt cho tiêu hóa, hỗ trợ giảm cân...</p>
+      <a href="/loi-ich-cua-rau-xanh" className="read-more">Xem thêm →</a>
+    </div>
+
+    {/* Bài viết 2 */}
+    <div className="news-card">
+      <img src="./rau-tot.jpg" alt="Những loại rau tốt nhất" />
+      <h3>Những loại rau tốt nhất cho sức khỏe</h3>
+      <p>Cải bó xôi, bông cải xanh, cà rốt... giúp phòng chống bệnh tật hiệu quả.</p>
+      <a href="/nhung-loai-rau-tot-nhat" className="read-more">Xem thêm →</a>
+    </div>
+
+    {/* Bài viết 3 */}
+    <div className="news-card">
+      <img src="./khoa-hoc.png" alt="Nghiên cứu khoa học" />
+      <h3>Nghiên cứu khoa học về lợi ích của rau xanh</h3>
+      <p>WHO cảnh báo rằng thiếu rau trong chế độ ăn là nguyên nhân gây ung thư tiêu hóa.</p>
+      <a href="/nghien-cuu-khoa-hoc" className="read-more">Xem thêm →</a>
+    </div>
+
+  </div>
+</div>
+
       </div>
     </div>
   );
