@@ -108,7 +108,7 @@ const Payment = () => {
             }
         } else {
             navigate('/cart')
-            toast.error("Không có sản phẩm cần thanh toán")
+            toast.error("Không có sản phẩm cần đặt hàng")
         }
     }
     const findCartDetailPayNowAndLocal = async () => {
@@ -130,7 +130,7 @@ const Payment = () => {
                         toast.error(product.error);
                     });
                     if (validProducts.length <= 0) {
-                        toast.error("Không có sản phẩm cần thanh toán")
+                        toast.error("Không có sản phẩm cần đặt hàng")
                         navigate('/')
                     }
                 }
@@ -139,7 +139,7 @@ const Payment = () => {
                 navigate('/')
             }
         } else {
-            toast.error("Không có sản phẩm cần thanh toán")
+            toast.error("Không có sản phẩm cần đặt hàng")
             navigate('/')
         }
     }
@@ -281,7 +281,7 @@ const Payment = () => {
                 /^0[0-9]{9,10}$/.test(value)
             )
             .min(10, 'Số điện thoại phải có ít nhất 10 chữ số')
-            .max(11, 'Số điện thoại không được quá 11 chữ số'),
+            .max(10, 'Số điện thoại không được quá 10 chữ số'),
         city: yup.string().required('Tỉnh/Thành phố là bắt buộc.'),
         district: yup.string().required('Quận/Huyện là bắt buộc.'),
         ward: yup.string().required('Phường/Xã là bắt buộc.'),
@@ -292,7 +292,7 @@ const Payment = () => {
         try {
             const response = await payBillOnline(IdCartDetail, codeVoucher, idAccount, name, phoneNumber, address, note)
             if (response.status === 200) {
-                toast.success("Thanh toán thành công!");
+                toast.success("Đặt hàng thành công!");
                 return true;
             }
         } catch (error) {
@@ -304,11 +304,11 @@ const Payment = () => {
         try {
             const response = await payBillOnlinev2(productPromoRequests, codeVoucher, idAccount, name, phoneNumber, address, note)
             if (response.status === 200) {
-                toast.success("Thanh toán thành công!");
+                toast.success("Đặt hàng thành công!");
                 return true;
             }
         } catch (error) {
-            console.error("Lỗi khi thanh toán:", error);
+            console.error("Lỗi khi đặt hàng:", error);
             return false;
         }
     }
@@ -344,8 +344,8 @@ const Payment = () => {
             const fullAddress = `${values.address}, ${wardName}, ${districtName}, ${cityName}, Việt Nam`;
 
             swal({
-                title: "Bạn có muốn thanh toán sản phẩm?",
-                text: `Thanh toán sản phẩm!`,
+                title: "Bạn có chắc chắn đặt hàng?",
+                text: `Đặt hàng!`,
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -357,13 +357,13 @@ const Payment = () => {
 
                         if (isSuccess) {
                             // Nếu thành công
-                            swal("Thanh toán thành công!", {
+                            swal("Đặt hàng thành công!", {
                                 icon: "success",
                             });
                             navigate('/cart')
                         } else {
                             // Nếu thất bại
-                            swal("Thanh toán thất bại!", {
+                            swal("Đặt hàng thất bại thất bại!", {
                                 icon: "error",
                             });
                         }
@@ -375,20 +375,20 @@ const Payment = () => {
                             if (payProduct && payProduct?.length > 0) {
                                 deleteSelectCartLocal(payProduct)
                             }
-                            swal("Thanh toán thành công!", {
+                            swal("Đặt hàng thành công!", {
                                 icon: "success",
                             });
                             navigate('/')
                         } else {
                             // Nếu thất bại
-                            swal("Thanh toán thất bại!", {
+                            swal("Đặt hàng thất bại!", {
                                 icon: "error",
                             });
                         }
                     }
                 } else {
                     // Người dùng hủy thanh toán
-                    swal("Hủy thanh toán!", {
+                    swal("Hủy Đặt hàng!", {
                         icon: "info",
                     });
                 }
