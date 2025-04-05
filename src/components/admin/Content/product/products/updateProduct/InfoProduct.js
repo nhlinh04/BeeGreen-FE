@@ -9,22 +9,7 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
     const [listImage, setListImage] = useState({
         previewImages: []
     });
-    const resetForm = () => {
-        setProduct({
-            id: null,
-            name: '',
-            pricePerBaseUnit: '',
-            // quantity: '',
-            baseUnit: '',
-            idCategory: '',
-            listImages: []
-        });
-
-        setListImage({
-            previewImages: []
-        });
-    };
-
+    
     const categorys = useSelector((state) => state.category.listCategory);
 
     useEffect(() => {
@@ -452,7 +437,6 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
             </Row>
             <Row className='m-4 text-end'>
                 <Col>
-                    <Button className='mx-3' variant="success" onClick={() => resetForm()}>Reset Form</Button>
                     <Button className='mx-3' variant="primary" onClick={() => handleSubmitUpdate()}>Cập nhật sản phẩm</Button>
                 </Col>
             </Row>

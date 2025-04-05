@@ -62,7 +62,7 @@ const TableShoe = ({ currentPage, setCurrentPage }) => {
     };
     return (
         <>
-            <Table striped bordered hover>
+            <Table bordered hover>
                 <thead className='table'>
                     <tr>
                         <th className='text-center'>STT</th>

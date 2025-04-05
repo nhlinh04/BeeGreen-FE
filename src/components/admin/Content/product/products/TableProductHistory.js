@@ -41,7 +41,7 @@ const TableProductHistory = ({ productHistory }) => {
 
     return (
         <>
-            <Table striped bordered hover className='text-center'>
+            <Table bordered hover className='text-center'>
                 <thead>
                     <tr>
                         <th>STT</th>
