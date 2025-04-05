@@ -357,414 +357,414 @@ const ModalDetailBill = () => {
 
 
 
-    const renderTableRows = (data, type) => {
-        return data.length > 0 ? (
-            data.map((item, index) => (
-                <tr
-                    key={
-                        item.tradingCode ||
-                        item.productCode ||
-                        `${item.productCode}-${index}`
-                    }
-                >
-                    <td className="text-center">{index + 1}</td>
-                    {type === "payment" ? (
-                        <>
-                            <td className="text-center">{item.tradingCode}</td>
-                            <td className="text-center">{formatCurrency(item.amount)}</td>
-                            <td className="text-center">
-                                <span
-                                    className={`badge ${item.status === "COMPLETED"
-                                        ? "text-bg-success"
-                                        : item.status === "WAITING_FOR_PAYMENT"
-                                            ? "text-bg-danger"
-                                            : "text-bg-warning"
-                                        }`}
-                                >
-                                    {item.status === "COMPLETED"
-                                        ? "Đã thanh toán"
-                                        : item.status === "WAITING_FOR_PAYMENT"
-                                            ? "Chưa thanh toán"
-                                            : "Đang xử lý"}
-                                </span>
-                            </td>
+        const renderTableRows = (data, type) => {
+            return data.length > 0 ? (
+                data.map((item, index) => (
+                    <tr
+                        key={
+                            item.tradingCode ||
+                            item.productCode ||
+                            `${item.productCode}-${index}`
+                        }
+                    >
+                        <td className="text-center">{index + 1}</td>
+                        {type === "payment" ? (
+                            <>
+                                <td className="text-center">{item.tradingCode}</td>
+                                <td className="text-center">{formatCurrency(item.amount)}</td>
+                                <td className="text-center">
+                                    <span
+                                        className={`badge ${item.status === "COMPLETED"
+                                            ? "text-bg-success"
+                                            : item.status === "WAITING_FOR_PAYMENT"
+                                                ? "text-bg-danger"
+                                                : "text-bg-warning"
+                                            }`}
+                                    >
+                                        {item.status === "COMPLETED"
+                                            ? "Đã thanh toán"
+                                            : item.status === "WAITING_FOR_PAYMENT"
+                                                ? "Chưa thanh toán"
+                                                : "Đang xử lý"}
+                                    </span>
+                                </td>
 
-                            <td className="text-center">
-                                {new Date(item.createdAt).toLocaleString("vi-VN", {
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                    second: "2-digit",
-                                    day: "2-digit",
-                                    month: "2-digit",
-                                    year: "numeric",
-                                })}
-                            </td>
-                            <td className="text-center">
-                                <span
-                                    className={`badge text-bg-${item.type === 1 ? "warning" : "danger"
-                                        }`}
-                                >
-                                    {item.type === 1 ? "Trả trước" : "Trả sau"}
-                                </span>
-                            </td>
+                                <td className="text-center">
+                                    {new Date(item.createdAt).toLocaleString("vi-VN", {
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                        second: "2-digit",
+                                        day: "2-digit",
+                                        month: "2-digit",
+                                        year: "numeric",
+                                    })}
+                                </td>
+                                <td className="text-center">
+                                    <span
+                                        className={`badge text-bg-${item.type === 1 ? "warning" : "danger"
+                                            }`}
+                                    >
+                                        {item.type === 1 ? "Trả trước" : "Trả sau"}
+                                    </span>
+                                </td>
 
-                            <td className="text-center">
-                                {item.namePayment === "Cash payment"
-                                    ? "Tiền mặt"
-                                    : "Chuyển khoản"}
-                            </td>
-                        </>
-                    ) : (
-                        <></>
-                    )}
+                                <td className="text-center">
+                                    {item.namePayment === "Cash payment"
+                                        ? "Tiền mặt"
+                                        : "Chuyển khoản"}
+                                </td>
+                            </>
+                        ) : (
+                            <></>
+                        )}
+                    </tr>
+                ))
+            ) : (
+                <tr>
+                    <td colSpan={type === "payment" ? 9 : 8} className="text-center">
+                        No {type === "payment" ? "payment history" : "products"} found for
+                        this bill.
+                    </td>
                 </tr>
-            ))
-        ) : (
-            <tr>
-                <td colSpan={type === "payment" ? 9 : 8} className="text-center">
-                    No {type === "payment" ? "payment history" : "products"} found for
-                    this bill.
-                </td>
-            </tr>
+            );
+        };
+
+        return (
+            <div className="main">
+                {loading ? (
+                    <p>Loading...</p>
+                ) : error ? (
+                    <Alert variant="danger">{error}</Alert>
+                ) : (
+                    <>
+                        <div className="progress-container">
+                            <div className="card card-timeline px-2 border-none">
+                                <ul className={`bs4-order-tracking ${status.status5 || !status.status1 ? "disabled-tracking" : ""}`}>
+                                    {billSummary?.status === 'CANCELLED' ? (
+                                        <li className="step cancelled text-center">
+                                            <div className="d-flex justify-content-center">
+                                                <FaTimesCircle size={48} />
+                                            </div>
+                                            <span className="text-danger fw-bold">Hóa đơn đã bị hủy</span>
+                                        </li>
+                                    ) : billSummary?.status === 'FAILED' ? (
+                                        ['Chờ xác nhận', 'Xác nhận', 'Chờ giao hàng', 'Đang giao', 'Giao hàng thất bại'].map((label, i) => {
+                                            const isActive = i < 4; // Mark the first four steps as active
+                                            return (
+                                                <li key={i} className={`step ${isActive ? "active" : "failed"}`}>
+                                                    <div>
+                                                        {i === 4 ? <FaTimesCircle size={48} /> : <FaCheckCircle />}
+                                                    </div>
+                                                    {label}
+                                                </li>
+                                            );
+                                        })
+                                    ) : (
+                                        ['Chờ xác nhận', 'Xác nhận', 'Chờ giao hàng', 'Đang giao', 'Hoàn thành'].map((label, i) => {
+                                            const isActive = status[`status${i + 1}`];
+                                            return (
+                                                <li key={i} className={`step ${isActive ? "active" : ""}`}>
+                                                    <div>
+                                                        {[
+                                                            <FaClipboardCheck />, // "Chờ xác nhận"
+                                                            <FaCheckCircle />,    // "Xác nhận"
+                                                            <FaBoxOpen />,        // "Chờ giao hàng"
+                                                            <FaTruck />,          // "Đang giao"
+                                                            <FaCheckCircle />,    // "Hoàn thành"
+                                                        ][i]}
+                                                    </div>
+                                                    {label}
+                                                </li>
+                                            );
+                                        })
+                                    )}
+                                </ul>
+
+
+                                {billSummary?.status !== 'FAILED' && (
+                                    <div className="bth m-3 text-center">
+                                        <Button
+                                            variant="primary"
+                                            className="m-3"
+                                            disabled={status.status5 || !status.status1}
+                                            onClick={() => handleCompleteBill()}
+                                        >
+                                            {showStatus(billSummary?.status)}
+                                        </Button>
+
+                                        {billSummary?.status === 'SHIPPED' && (
+                                            <Button
+                                                variant="warning"
+                                                className="m-3"
+                                                onClick={() => {
+                                                    swal({
+                                                        title: "Xác nhận giao hàng thất bại?",
+                                                        text: "Vui lòng nhập lý do giao hàng thất bại:",
+                                                        content: {
+                                                            element: "input",
+                                                            attributes: {
+                                                                placeholder: "Nhập lý do tại đây...",
+                                                                type: "text",
+                                                            },
+                                                        },
+                                                        buttons: ["Hủy", "Xác nhận"],
+                                                        dangerMode: true,
+                                                    }).then(async (reason) => {
+                                                        if (reason) {
+                                                            try {
+                                                                await updateBillStatusAndNote(codeBill, 'FAILED', reason); // Update the status with the reason
+                                                                await createHistoryBill4(reason); // Pass the entered reason to the history creation function
+                                                                await fetchBillDetailsAndPayBill(); // Refresh the bill details
+                                                                toast.success("Đã cập nhật trạng thái giao hàng thất bại.");
+                                                            } catch (error) {
+                                                                toast.error("Lỗi khi cập nhật trạng thái giao hàng thất bại.");
+                                                            }
+                                                        } else {
+                                                            toast.error("Lý do không được để trống.");
+                                                        }
+                                                    });
+                                                }}
+                                            >
+                                                Giao hàng thất bại
+                                            </Button>
+
+                                        )}
+
+                                        {billSummary?.status !== 'SHIPPED' && (
+                                            <Button
+                                                variant="danger"
+                                                className="m-3"
+                                                disabled={status.status5 || !status.status1 || status === 'FAILED'}
+                                                onClick={handleCancelBill}
+                                            >
+                                                Hủy
+                                            </Button>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <div className="history-pay m-3 d-flex align-items-center">
+                            <h4 className="me-3">Lịch sử hóa đơn:</h4>
+                            {billHistory && billHistory.length > 0 ? (
+                                <div
+                                    className="d-flex flex-column"
+                                    onClick={handleShowHistoryModal}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <p className="mb-0 text-secondary">
+                                        {new Date(billHistory[billHistory.length - 1].createdAt).toLocaleString('vi-VN', {
+                                            hour: '2-digit',
+                                            minute: '2-digit',
+                                            second: '2-digit',
+                                            day: '2-digit',
+                                            month: '2-digit',
+                                            year: 'numeric'
+                                        })} - {billHistory[billHistory.length - 1].note}
+                                    </p>
+                                </div>
+                            ) : (
+                                <p className="mb-0">Không có lịch sử hóa đơn nào.</p>
+                            )}
+
+
+                            <Modal show={showHistoryModal} onHide={handleCloseHistoryModal}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Chi tiết lịch sử hóa đơn</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <TableBillHistory onAddTableBillHistory={handleAddProductSuccess} codeBill={codeBill} />
+
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={handleCloseHistoryModal} >
+                                        Đóng
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
+                        </div>
+
+
+
+                        <div className="history-pay m-3">
+                            <h4>Lịch sử thanh toán</h4>
+                            <Table striped bordered hover size="sm text-center">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th><th>Mã giao dịch</th><th>Số tiền</th><th>Trạng thái</th><th>Thời gian</th>
+                                        <th>Loại giao dịch</th><th>Phương thức thanh toán</th>
+                                    </tr>
+                                </thead>
+                                <tbody>{renderTableRows(payBill, "payment")}</tbody>
+                            </Table>
+                        </div>
+
+                        <div className="infBill m-3">
+                            <div className="d-flex justify-content-between">
+                                <h4>Thông tin đơn hàng: {codeBill}</h4>
+                                {billSummary?.status !== 'FAILED' && billSummary?.status !== 'SHIPPED' && billSummary?.status !== 'COMPLETED' && billSummary?.status !== 'CONFIRMED' && billSummary?.status !== 'WAITTING_FOR_SHIPPED' && billSummary?.status !== 'CANCELLED' ? (
+                                    <ModalUpdateCustomer
+                                        customerData={billSummary}
+                                        onUpdate={() => fetchBillDetailsAndPayBill()}
+                                    />
+                                ) : (
+                                    <Button variant="secondary" disabled>
+                                        Cập nhật thông tin
+                                    </Button>
+                                )}
+                            </div>
+
+                            {billSummary && (
+                                <div className='row'>
+                                    <div className='col'>
+                                        <div className='status d-flex flex-row mb-3'>
+                                            <h5 className='mx-3'>Tên khách hàng:</h5>
+                                            <h5>{billSummary.nameCustomer || 'Khách lẻ'}</h5>
+                                        </div>
+                                        <div className='status d-flex flex-row mb-3'>
+                                            <h5 className='mx-3'>Địa chỉ:</h5>
+                                            <h5>{billSummary.address || ''}</h5>
+                                        </div>
+                                    </div>
+                                    <div className='col'>
+
+                                        <div className='status d-flex flex-row mb-3'>
+                                            <h5 className='mx-3'>SDT:</h5>
+                                            <h5>{billSummary.phoneNumber || ''}</h5>
+                                        </div>
+                                        <div className='status d-flex flex-row mb-3'>
+                                            <h5 className='mx-3'>Ghi chú:</h5>
+                                            <h5>{billSummary.note || ''}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="history-product m-3">
+                            <div className="d-flex justify-content-between mb-3">
+                                <h4>Thông tin sản phẩm đã mua</h4>
+                                {billSummary?.status !== 'FAILED' && billSummary?.status !== 'SHIPPED' &&
+                                    billSummary?.status !== 'COMPLETED' &&
+                                    billSummary?.status !== 'CONFIRMED' &&
+                                    billSummary?.status !== 'WAITTING_FOR_SHIPPED' &&
+                                    billSummary?.status !== 'CANCELLED'
+                                    ? (
+                                        <>
+                                            <Button variant="primary" onClick={handleShow}>
+                                                Thêm sản phẩm
+                                            </Button>
+                                            <Modal
+                                                show={show}
+                                                onHide={handleClose}
+                                                size="xl"
+                                                backdrop="static"
+                                            >
+                                                <Modal.Header closeButton>
+                                                    <Modal.Title>Sản Phẩm:</Modal.Title>
+                                                </Modal.Header>
+                                                <Modal.Body>
+                                                    <Form>
+                                                        <Container>
+                                                            <Row>
+                                                                <Col>
+                                                                    <ModalUpdateProduct
+                                                                        selectedProductIds={selectedProductIds}
+                                                                        setSelectedProductIds={setSelectedProductIds}
+                                                                    />
+                                                                </Col>
+                                                            </Row>
+                                                        </Container>
+                                                    </Form>
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button variant="secondary" onClick={handleClose}>
+                                                        Thoát
+                                                    </Button>
+                                                    <Button variant="primary" onClick={handleSubmitCreate}>
+                                                        Lưu
+                                                    </Button>
+                                                </Modal.Footer>
+                                            </Modal>
+                                        </>
+                                    ) : (
+                                        <Button variant="secondary" disabled>
+                                            Không thể chọn sản phẩm
+                                        </Button>
+                                    )}
+                            </div>
+
+
+
+
+                            {listBillDetailOrder && listBillDetailOrder.length > 0 ? (
+                                <TableCart
+                                    codeBill={codeBill}
+                                    setLoading={setLoading}
+                                    setBillSummary={setBillSummary}
+                                    setBillDetail={setBillDetail}
+                                    setPayBill={setPayBill}
+                                    setBillHistory={setBillHistory}
+                                    updateStatus={updateStatus}
+                                    setError={setError}
+                                    billSummary={billSummary}
+                                />
+                            ) : (
+                                <div className="d-flex flex-column justify-content-center align-items-center p-2">
+                                    <Image
+                                        src={imageCart}
+                                        className="text-center"
+                                        style={{ width: '300px', height: 'auto' }}
+                                    />
+                                    <p className="mt-3">Không có sản phẩm nào </p>
+                                </div>
+                            )}
+
+
+                        </div>
+
+                        <div className='moneyPay d-flex justify-content-end m-5'>
+                            <div className=''>
+                                <div className='status d-flex flex-row mb-3'>
+                                    <h5 className='mx-3'>Tổng tiền hàng:</h5>
+                                    <h5 className='text-center'>{formatCurrency(totalMerchandise)} VND</h5>
+                                </div>
+                                <div className='status d-flex flex-row mb-3'>
+                                    <h5 className='mx-3'>Voucher giảm giá:</h5>
+                                    <h5 className='text-center'>
+                                        {priceDiscount ? `${formatCurrency(priceDiscount)} VND` : '0 VND'}
+                                    </h5>
+
+
+                                </div>
+                                {billSummary?.address && (
+                                    <div className='status d-flex flex-row mb-3'>
+                                        <h5 className='mx-3'>Phí vận chuyển:</h5>
+                                        <h5 className='text-center'>
+                                            30,000 VND
+                                        </h5>
+                                    </div>
+                                )}
+
+                                <hr />
+                                <div className='status d-flex flex-row mb-3'>
+                                    <h5 className='mx-3'>Tổng tiền thanh toán:</h5>
+                                    <h5>{formatCurrency(totalAmount)} VND</h5>
+                                </div>
+                            </div>
+                        </div>
+                        < ModalActualQuantity
+                            show={show2}
+                            setShow={setShow2}
+                            billDetail={billDetail}
+                            createHistoryBill={createHistoryBill}
+                            fetchBillDetailsAndPayBill={fetchBillDetailsAndPayBill}
+                            codeBill={codeBill}
+                        />
+                    </>
+                )}
+            </div>
         );
     };
 
-    return (
-        <div className="main">
-            {loading ? (
-                <p>Loading...</p>
-            ) : error ? (
-                <Alert variant="danger">{error}</Alert>
-            ) : (
-                <>
-                    <div className="progress-container">
-                        <div className="card card-timeline px-2 border-none">
-                            <ul className={`bs4-order-tracking ${status.status5 || !status.status1 ? "disabled-tracking" : ""}`}>
-                                {billSummary?.status === 'CANCELLED' ? (
-                                    <li className="step cancelled text-center">
-                                        <div className="d-flex justify-content-center">
-                                            <FaTimesCircle size={48} />
-                                        </div>
-                                        <span className="text-danger fw-bold">Hóa đơn đã bị hủy</span>
-                                    </li>
-                                ) : billSummary?.status === 'FAILED' ? (
-                                    ['Chờ xác nhận', 'Xác nhận', 'Chờ giao hàng', 'Đang giao', 'Giao hàng thất bại'].map((label, i) => {
-                                        const isActive = i < 4; // Mark the first four steps as active
-                                        return (
-                                            <li key={i} className={`step ${isActive ? "active" : "failed"}`}>
-                                                <div>
-                                                    {i === 4 ? <FaTimesCircle size={48} /> : <FaCheckCircle />}
-                                                </div>
-                                                {label}
-                                            </li>
-                                        );
-                                    })
-                                ) : (
-                                    ['Chờ xác nhận', 'Xác nhận', 'Chờ giao hàng', 'Đang giao', 'Hoàn thành'].map((label, i) => {
-                                        const isActive = status[`status${i + 1}`];
-                                        return (
-                                            <li key={i} className={`step ${isActive ? "active" : ""}`}>
-                                                <div>
-                                                    {[
-                                                        <FaClipboardCheck />, // "Chờ xác nhận"
-                                                        <FaCheckCircle />,    // "Xác nhận"
-                                                        <FaBoxOpen />,        // "Chờ giao hàng"
-                                                        <FaTruck />,          // "Đang giao"
-                                                        <FaCheckCircle />,    // "Hoàn thành"
-                                                    ][i]}
-                                                </div>
-                                                {label}
-                                            </li>
-                                        );
-                                    })
-                                )}
-                            </ul>
-
-
-                            {billSummary?.status !== 'FAILED' && (
-                                <div className="bth m-3 text-center">
-                                    <Button
-                                        variant="primary"
-                                        className="m-3"
-                                        disabled={status.status5 || !status.status1}
-                                        onClick={() => handleCompleteBill()}
-                                    >
-                                        {showStatus(billSummary?.status)}
-                                    </Button>
-
-                                    {billSummary?.status === 'SHIPPED' && (
-                                        <Button
-                                            variant="warning"
-                                            className="m-3"
-                                            onClick={() => {
-                                                swal({
-                                                    title: "Xác nhận giao hàng thất bại?",
-                                                    text: "Vui lòng nhập lý do giao hàng thất bại:",
-                                                    content: {
-                                                        element: "input",
-                                                        attributes: {
-                                                            placeholder: "Nhập lý do tại đây...",
-                                                            type: "text",
-                                                        },
-                                                    },
-                                                    buttons: ["Hủy", "Xác nhận"],
-                                                    dangerMode: true,
-                                                }).then(async (reason) => {
-                                                    if (reason) {
-                                                        try {
-                                                            await updateBillStatusAndNote(codeBill, 'FAILED', reason); // Update the status with the reason
-                                                            await createHistoryBill4(reason); // Pass the entered reason to the history creation function
-                                                            await fetchBillDetailsAndPayBill(); // Refresh the bill details
-                                                            toast.success("Đã cập nhật trạng thái giao hàng thất bại.");
-                                                        } catch (error) {
-                                                            toast.error("Lỗi khi cập nhật trạng thái giao hàng thất bại.");
-                                                        }
-                                                    } else {
-                                                        toast.error("Lý do không được để trống.");
-                                                    }
-                                                });
-                                            }}
-                                        >
-                                            Giao hàng thất bại
-                                        </Button>
-
-                                    )}
-
-                                    {billSummary?.status !== 'SHIPPED' && (
-                                        <Button
-                                            variant="danger"
-                                            className="m-3"
-                                            disabled={status.status5 || !status.status1 || status === 'FAILED'}
-                                            onClick={handleCancelBill}
-                                        >
-                                            Hủy
-                                        </Button>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                    <div className="history-pay m-3 d-flex align-items-center">
-                        <h4 className="me-3">Lịch sử hóa đơn:</h4>
-                        {billHistory && billHistory.length > 0 ? (
-                            <div
-                                className="d-flex flex-column"
-                                onClick={handleShowHistoryModal}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                <p className="mb-0 text-secondary">
-                                    {new Date(billHistory[billHistory.length - 1].createdAt).toLocaleString('vi-VN', {
-                                        hour: '2-digit',
-                                        minute: '2-digit',
-                                        second: '2-digit',
-                                        day: '2-digit',
-                                        month: '2-digit',
-                                        year: 'numeric'
-                                    })} - {billHistory[billHistory.length - 1].note}
-                                </p>
-                            </div>
-                        ) : (
-                            <p className="mb-0">Không có lịch sử hóa đơn nào.</p>
-                        )}
-
-
-                        <Modal show={showHistoryModal} onHide={handleCloseHistoryModal}>
-                            <Modal.Header closeButton>
-                                <Modal.Title>Chi tiết lịch sử hóa đơn</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <TableBillHistory onAddTableBillHistory={handleAddProductSuccess} codeBill={codeBill} />
-
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button variant="secondary" onClick={handleCloseHistoryModal} >
-                                    Đóng
-                                </Button>
-                            </Modal.Footer>
-                        </Modal>
-                    </div>
-
-
-
-                    <div className="history-pay m-3">
-                        <h4>Lịch sử thanh toán</h4>
-                        <Table striped bordered hover size="sm text-center">
-                            <thead>
-                                <tr>
-                                    <th>STT</th><th>Mã giao dịch</th><th>Số tiền</th><th>Trạng thái</th><th>Thời gian</th>
-                                    <th>Loại giao dịch</th><th>Phương thức thanh toán</th>
-                                </tr>
-                            </thead>
-                            <tbody>{renderTableRows(payBill, "payment")}</tbody>
-                        </Table>
-                    </div>
-
-                    <div className="infBill m-3">
-                        <div className="d-flex justify-content-between">
-                            <h4>Thông tin đơn hàng: {codeBill}</h4>
-                            {billSummary?.status !== 'FAILED' && billSummary?.status !== 'SHIPPED' && billSummary?.status !== 'COMPLETED' && billSummary?.status !== 'CONFIRMED' && billSummary?.status !== 'WAITTING_FOR_SHIPPED' && billSummary?.status !== 'CANCELLED' ? (
-                                <ModalUpdateCustomer
-                                    customerData={billSummary}
-                                    onUpdate={() => fetchBillDetailsAndPayBill()}
-                                />
-                            ) : (
-                                <Button variant="secondary" disabled>
-                                    Cập nhật thông tin
-                                </Button>
-                            )}
-                        </div>
-
-                        {billSummary && (
-                            <div className='row'>
-                                <div className='col'>
-                                    <div className='status d-flex flex-row mb-3'>
-                                        <h5 className='mx-3'>Tên khách hàng:</h5>
-                                        <h5>{billSummary.nameCustomer || 'Khách lẻ'}</h5>
-                                    </div>
-                                    <div className='status d-flex flex-row mb-3'>
-                                        <h5 className='mx-3'>Địa chỉ:</h5>
-                                        <h5>{billSummary.address || ''}</h5>
-                                    </div>
-                                </div>
-                                <div className='col'>
-
-                                    <div className='status d-flex flex-row mb-3'>
-                                        <h5 className='mx-3'>SDT:</h5>
-                                        <h5>{billSummary.phoneNumber || ''}</h5>
-                                    </div>
-                                    <div className='status d-flex flex-row mb-3'>
-                                        <h5 className='mx-3'>Ghi chú:</h5>
-                                        <h5>{billSummary.note || ''}</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="history-product m-3">
-                        <div className="d-flex justify-content-between mb-3">
-                            <h4>Thông tin sản phẩm đã mua</h4>
-                            {billSummary?.status !== 'FAILED' && billSummary?.status !== 'SHIPPED' &&
-                                billSummary?.status !== 'COMPLETED' &&
-                                billSummary?.status !== 'CONFIRMED' &&
-                                billSummary?.status !== 'WAITTING_FOR_SHIPPED' &&
-                                billSummary?.status !== 'CANCELLED'
-                                ? (
-                                    <>
-                                        <Button variant="primary" onClick={handleShow}>
-                                            Thêm sản phẩm
-                                        </Button>
-                                        <Modal
-                                            show={show}
-                                            onHide={handleClose}
-                                            size="xl"
-                                            backdrop="static"
-                                        >
-                                            <Modal.Header closeButton>
-                                                <Modal.Title>Sản Phẩm:</Modal.Title>
-                                            </Modal.Header>
-                                            <Modal.Body>
-                                                <Form>
-                                                    <Container>
-                                                        <Row>
-                                                            <Col>
-                                                                <ModalUpdateProduct
-                                                                    selectedProductIds={selectedProductIds}
-                                                                    setSelectedProductIds={setSelectedProductIds}
-                                                                />
-                                                            </Col>
-                                                        </Row>
-                                                    </Container>
-                                                </Form>
-                                            </Modal.Body>
-                                            <Modal.Footer>
-                                                <Button variant="secondary" onClick={handleClose}>
-                                                    Thoát
-                                                </Button>
-                                                <Button variant="primary" onClick={handleSubmitCreate}>
-                                                    Lưu
-                                                </Button>
-                                            </Modal.Footer>
-                                        </Modal>
-                                    </>
-                                ) : (
-                                    <Button variant="secondary" disabled>
-                                        Không thể chọn sản phẩm
-                                    </Button>
-                                )}
-                        </div>
-
-
-
-
-                        {listBillDetailOrder && listBillDetailOrder.length > 0 ? (
-                            <TableCart
-                                codeBill={codeBill}
-                                setLoading={setLoading}
-                                setBillSummary={setBillSummary}
-                                setBillDetail={setBillDetail}
-                                setPayBill={setPayBill}
-                                setBillHistory={setBillHistory}
-                                updateStatus={updateStatus}
-                                setError={setError}
-                                billSummary={billSummary}
-                            />
-                        ) : (
-                            <div className="d-flex flex-column justify-content-center align-items-center p-2">
-                                <Image
-                                    src={imageCart}
-                                    className="text-center"
-                                    style={{ width: '300px', height: 'auto' }}
-                                />
-                                <p className="mt-3">Không có sản phẩm nào </p>
-                            </div>
-                        )}
-
-
-                    </div>
-
-                    <div className='moneyPay d-flex justify-content-end m-5'>
-                        <div className=''>
-                            <div className='status d-flex flex-row mb-3'>
-                                <h5 className='mx-3'>Tổng tiền hàng:</h5>
-                                <h5 className='text-center'>{formatCurrency(totalMerchandise)} VND</h5>
-                            </div>
-                            <div className='status d-flex flex-row mb-3'>
-                                <h5 className='mx-3'>Voucher giảm giá:</h5>
-                                <h5 className='text-center'>
-                                    {priceDiscount ? `${formatCurrency(priceDiscount)} VND` : '0 VND'}
-                                </h5>
-
-
-                            </div>
-                            {billSummary?.address && (
-                                <div className='status d-flex flex-row mb-3'>
-                                    <h5 className='mx-3'>Phí vận chuyển:</h5>
-                                    <h5 className='text-center'>
-                                        30,000 VND
-                                    </h5>
-                                </div>
-                            )}
-
-                            <hr />
-                            <div className='status d-flex flex-row mb-3'>
-                                <h5 className='mx-3'>Tổng tiền thanh toán:</h5>
-                                <h5>{formatCurrency(totalAmount)} VND</h5>
-                            </div>
-                        </div>
-                    </div>
-                    < ModalActualQuantity
-                        show={show2}
-                        setShow={setShow2}
-                        billDetail={billDetail}
-                        createHistoryBill={createHistoryBill}
-                        fetchBillDetailsAndPayBill={fetchBillDetailsAndPayBill}
-                        codeBill={codeBill}
-                    />
-                </>
-            )}
-        </div>
-    );
-};
-
-export default ModalDetailBill;
+    export default ModalDetailBill;
