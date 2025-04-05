@@ -16,7 +16,7 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
             // quantity: '',
             baseUnit: '',
             idCategory: '',
-            listImages: []
+            listImages: [],
         });
 
         setListImage({
@@ -79,7 +79,7 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
             //         errors[fieldName] = null;
             //     }
             // }
-             else if (fieldName === "idCategory") {
+            else if (fieldName === "idCategory") {
                 // Chỉ kiểm tra xem đã chọn danh mục hay chưa
                 errors[fieldName] = fieldValue ? null : "Vui lòng chọn danh mục";
             } else {
@@ -106,7 +106,7 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
                 ...prev,
                 ...newError,
             }));
-        } 
+        }
         // else if (name === 'quantity') {
         //     setProduct((prev) => ({
         //         ...prev,
@@ -148,7 +148,7 @@ const InfoProduct = ({ product, setProduct, formErrors, setFormErrors, handleSub
                 ...prev,
                 ...newError,
             }));
-        } 
+        }
         // else if (name === 'quantity') {
         //     setProduct((prev) => ({
         //         ...prev,

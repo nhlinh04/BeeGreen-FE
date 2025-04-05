@@ -10,14 +10,27 @@ const NotFoundData = '/NotFoundData.png';
 const TableBatches = ({ product, listBatches, getBatches }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchName, setSearchName] = useState("");
+    const [filterOption, setFilterOption] = useState("all"); // State for filter
     const [debouncedSearchName] = useDebounce(searchName, 1000);
     const itemsPerPage = 3;
 
-    // Filter batches based on search
-    const filteredBatches = listBatches.filter(batch =>
-        batch.code?.toLowerCase().includes(debouncedSearchName.toLowerCase()) ||
-        batch.quantity?.toString().includes(debouncedSearchName)
-    );
+    // Filter batches based on search and filter option
+    const filteredBatches = listBatches.filter(batch => {
+        const isMatchingSearch = batch.code?.toLowerCase().includes(debouncedSearchName.toLowerCase()) ||
+            batch.quantity?.toString().includes(debouncedSearchName);
+
+        const now = new Date();
+        const hsdDate = new Date(batch.hsd);
+        const daysToExpire = Math.ceil((hsdDate - now) / (1000 * 60 * 60 * 24));
+
+        if (filterOption === "expiredOrZero") {
+            return isMatchingSearch && (batch.quantity === 0 || daysToExpire <= 0);
+        } else if (filterOption === "expiringSoon") {
+            return isMatchingSearch && daysToExpire > 0 && daysToExpire <= 3;
+        }
+
+        return isMatchingSearch; // Default: show all
+    });
 
     const currentProduct = filteredBatches;
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -62,8 +75,21 @@ const TableBatches = ({ product, listBatches, getBatches }) => {
                     onChange={(event) => setSearchName(event.target.value)}
                 />
             </div>
+            <div className='filter-product mb-3'>
+                <label htmlFor="filterOption" className="form-label">Lọc sản phẩm</label>
+                <select
+                    id="filterOption"
+                    className="form-select"
+                    value={filterOption}
+                    onChange={(event) => setFilterOption(event.target.value)}
+                >
+                    <option value="all">Tất cả</option>
+                    <option value="expiredOrZero">Hết hàng và hết hạn sử dụng</option>
+                    <option value="expiringSoon">Sắp hết hạn</option>
+                </select>
+            </div>
             <div className='table-product mb-3'>
-                <Table striped bordered hover className='align-middle'>
+                <Table bordered hover className='align-middle'>
                     <thead>
                         <tr>
                             <th>#</th>
@@ -76,48 +102,54 @@ const TableBatches = ({ product, listBatches, getBatches }) => {
                     </thead>
                     <tbody>
                         {currentItems && currentItems.length > 0 ? (
-                            currentItems.map((item, index) => (
-                                <tr key={item.id}>
-                                    <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
-                                    <td>{item.code || 'N/A'}</td>
-                                    <td>{item.quantity || 0} {product.baseUnit}</td>
-                                    <td>
-                                        {
-                                            new Date(item.nsx)
-                                                .toLocaleString("en-GB", {
-                                                    hour: "2-digit",
-                                                    minute: "2-digit",
-                                                })
-                                            + " " +
-                                            new Date(item.nsx)
-                                                .toLocaleDateString("en-GB", {
-                                                    day: "2-digit",
-                                                    month: "2-digit",
-                                                    year: "numeric",
-                                                })
-                                        }
-                                    </td>
-                                    <td>
-                                        {
-                                            new Date(item.hsd)
-                                                .toLocaleString("en-GB", {
-                                                    hour: "2-digit",
-                                                    minute: "2-digit",
-                                                })
-                                            + " " +
-                                            new Date(item.hsd)
-                                                .toLocaleDateString("en-GB", {
-                                                    day: "2-digit",
-                                                    month: "2-digit",
-                                                    year: "numeric",
-                                                })
-                                        }
-                                    </td>
-                                    <td>
-                                        {item.quantity > 0 ? <ModelExportProduct idProduct={product.id} codeBatches={item.code} getBatches={getBatches} /> : ""}
-                                    </td>
-                                </tr>
-                            ))
+                            currentItems.map((item, index) => {
+                                const now = new Date();
+                                const hsdDate = new Date(item.hsd);
+                                const daysToExpire = Math.ceil((hsdDate - now) / (1000 * 60 * 60 * 24));
+
+                                return (
+                                    <tr key={item.id} className={daysToExpire < 3 ? "table-danger" : ""}>
+                                        <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
+                                        <td>{item.code || 'N/A'}</td>
+                                        <td>{item.quantity || 0} {product.baseUnit}</td>
+                                        <td>
+                                            {
+                                                new Date(item.nsx)
+                                                    .toLocaleString("en-GB", {
+                                                        hour: "2-digit",
+                                                        minute: "2-digit",
+                                                    })
+                                                + " " +
+                                                new Date(item.nsx)
+                                                    .toLocaleDateString("en-GB", {
+                                                        day: "2-digit",
+                                                        month: "2-digit",
+                                                        year: "numeric",
+                                                    })
+                                            }
+                                        </td>
+                                        <td>
+                                            {
+                                                new Date(item.hsd)
+                                                    .toLocaleString("en-GB", {
+                                                        hour: "2-digit",
+                                                        minute: "2-digit",
+                                                    })
+                                                + " " +
+                                                new Date(item.hsd)
+                                                    .toLocaleDateString("en-GB", {
+                                                        day: "2-digit",
+                                                        month: "2-digit",
+                                                        year: "numeric",
+                                                    })
+                                            }
+                                        </td>
+                                        <td>
+                                            {item.quantity > 0 ? <ModelExportProduct idProduct={product.id} codeBatches={item.code} getBatches={getBatches} /> : ""}
+                                        </td>
+                                    </tr>
+                                );
+                            })
                         ) : (
                             <tr>
                                 <td colSpan={5} className="preview-image justify-content-center text-center p-3">
