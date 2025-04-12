@@ -15,8 +15,10 @@ const TableBatches = ({ product }) => {
     const itemsPerPage = 3;
 
     useEffect(() => {
-        getBatches();
-    }, [product]); // Add idProduct as dependency if it can change
+        if (product?.id) {
+            getBatches();
+        }
+    }, [product?.id]); // Add idProduct as dependency if it can change
 
     const getBatches = async () => {
         try {

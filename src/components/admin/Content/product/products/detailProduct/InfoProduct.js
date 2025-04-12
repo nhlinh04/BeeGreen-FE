@@ -102,14 +102,16 @@ const InfoProduct = ({ product }) => {
                     md={8} // Responsive: thu nhỏ trên màn hình nhỏ
                     className="d-flex justify-content-center align-items-center"
                 >
-                    <ListImageProduct
-                        id={product?.id}
-                        maxWidth="100%" // Chiếm toàn bộ chiều rộng của Col
-                        maxHeight="1000px" // Giới hạn chiều cao tối đa
-                        containerClassName="product-image-container"
-                        imageClassName="product-image"
-                        center={true} // Căn giữa
-                    />
+                    {product?.id && (
+                        <ListImageProduct
+                            id={product.id}
+                            maxWidth="100%" // Chiếm toàn bộ chiều rộng của Col
+                            maxHeight="1000px" // Giới hạn chiều cao tối đa
+                            containerClassName="product-image-container"
+                            imageClassName="product-image"
+                            center={true} // Căn giữa
+                        />
+                    )}
                 </Col>
 
             </Row>
