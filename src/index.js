@@ -34,10 +34,9 @@ import ModelCreateVoucher from "./components/admin/Content/discount/voucher/Mode
 import ModelUpdateVoucher from "./components/admin/Content/discount/voucher/ModelUpdateVoucher";
 import ModelDetailVoucher from "./components/admin/Content/discount/voucher/ModelDetailVoucher";
 import ManageCategory from "./components/admin/Content/product/category/ManageCategory";
-import Benefit from "./components/page/home/post/Benefit"; 
-import Science from "./components/page/home/post/Science"; 
-import TheBestVegetables from "./components/page/home/post/TheBestVegetables"; 
-
+import Benefit from "./components/page/home/post/Benefit";
+import Science from "./components/page/home/post/Science";
+import TheBestVegetables from "./components/page/home/post/TheBestVegetables";
 import ManageProduct from "./components/admin/Content/product/products/ManageProduct";
 import ModelCreateProduct from "./components/admin/Content/product/products/createProduct/ModelCreateProduct";
 import ModelDetailProduct from "./components/admin/Content/product/products/detailProduct/ModelDetailProduct";
@@ -47,6 +46,9 @@ import ManageAccountCustomer from "./components/admin/Content/account/customer/M
 import ManageAccountEmployee from "./components/admin/Content/account/employee/ManageAccountEmployee";
 import Logout from "./components/page/logout/Logout";
 import Payment from './components/page/payment/Payment';
+import ManageNearExpiration from "./components/admin/Content/expiry/ManageNearExpiration";
+import ModelCreate from "./components/admin/Content/expiry/ModelCreate";
+import Table from "./components/admin/Content/expiry/ConfigTable";
 import { ToastContainer } from "react-toastify";
 import { Provider } from "react-redux";
 import Auth from "./components/auth/Auth";
@@ -81,6 +83,7 @@ root.render(
 
           </Route>
           <Route path="/admins" element={<Admin />}>
+            <Route path="expiry-discount" element={<ManageNearExpiration />} />
             <Route path="manage-bill" element={<ManageBill />} />
             <Route
               path="/admins/manage-bill-detail/:codeBill"

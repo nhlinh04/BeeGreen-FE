@@ -56,10 +56,15 @@ authorizeAxiosInstance.interceptors.response.use(
           toast.error("Không tìm thấy tài nguyên!");
           break;
         case 400: {
+          const mess = errorData?.mess;
+          console.log(mess);
           if (Array.isArray(errorData)) {
             errorData.forEach(err => {
               toast.error(err);
             });
+          } else if (typeof errorData === 'string') {
+            // Đây là lỗi từ IllegalArgumentException (chuỗi plain text)
+            toast.error(errorData);
           } else {
             toast.error("Đã xảy ra lỗi xác thực. Vui lòng kiểm tra lại.");
           }

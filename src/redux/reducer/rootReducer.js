@@ -12,6 +12,7 @@ import billDetailByEmployeeReducer from "./billDetailByEmployeeReducer";
 import voucherBillReducer from "./voucherBillReducer";
 import payBillOrderReducer from "./payBillOrderReducer";
 import authReducer from "./authReducer";
+import discountNearExpirationReducer from "./discountNearExpirationReducer";
 const rootReducer = combineReducers({
   account: accountReducer,
   address: addressReducer,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   billDetailOrder: billDetailByEmployeeReducer,
   voucherBill: voucherBillReducer,
   payBillOrder: payBillOrderReducer,
+  config: discountNearExpirationReducer
 });
 
 export default rootReducer;

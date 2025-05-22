@@ -134,6 +134,15 @@ const SideBar = (props) => {
                             <MenuItem icon={<BiSolidDiscount />}>Quản lý phiếu giảm giá<Link to="/admins/manage-voucher" /></MenuItem>
                         </SubMenu>
                     </Menu>}
+                    {account?.role === "ADMIN" && <Menu iconShape="circle">
+                        <SubMenu
+                            icon={<GiPresent />}
+                            title="Ưu đãi & giao hàng"
+                        >
+                            <MenuItem icon={<RiDiscountPercentFill />}>Cấu hình giảm giá sản phẩm theo hạn sử dụng<Link to="/admins/expiry-discount" /></MenuItem>
+                            <MenuItem icon={<BiSolidDiscount />}>Quản lý khu vực giao hàng<Link to="/admins/delivery-areas" /></MenuItem>
+                        </SubMenu>
+                    </Menu>}
                     <hr />
                     <Menu iconShape="circle">
                         <MenuItem icon={<MdLogout />}>
