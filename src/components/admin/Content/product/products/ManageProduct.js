@@ -61,7 +61,7 @@ const ManageShoe = () => {
                                 </div>
                                 <div className='shoe-filter row'>
                                     <div className='shoe-status col'>
-                                        <label htmlFor="statusProduct" className="form-label">Trạng thái sản phẩm</label>
+                                        <label htmlFor="statusProduct" className="form-label">Trạng thái sản phẩm: </label>
                                         <div className='shoe-status d-flex justify-content-start'>
                                             <div className="form-check m-2">
                                                 <input

@@ -92,7 +92,7 @@ const ConfigTable = () => {
                                     </div>
                                 </td>
                                 <td>
-                                    <ModelEdit idConfig={item} />
+                                    <ModelEdit config={item} />
                                 </td>
                             </tr>
                         ))

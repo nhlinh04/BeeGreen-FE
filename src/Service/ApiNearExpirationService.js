@@ -15,7 +15,7 @@ export const updateStatusConfig = (idConfig, aBoolean) => {
     return authorizeAxiosInstance.put(`/discount-near-expiration/update-status?id=${idConfig}&aBoolean=${aBoolean}`);
 };
 
-export const updateExpiryConfig = (idConfig, updateExpiryConfig) => {
+export const updateDiscountExpiryConfig = (idConfig, updateExpiryConfig) => {
     return authorizeAxiosInstance.put(`/discount-near-expiration/update/${idConfig}`, updateExpiryConfig);
 };
 

@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { postCreateNewExpiryConfig } from '../../Service/ApiNearExpirationService';
 import { Fetch_Posts_DiscountConfigNearExpiry_Request, Fetch_Posts_DiscountConfigNearExpiry_Success, Fetch_Posts_DiscountConfigNearExpiry_Error } from '../types/NearExpirationTypes';
-import { findConfig, updateStatusConfig, getConfigById } from '../../Service/ApiNearExpirationService';
+import { findConfig, updateDiscountExpiryConfig, getConfigById, updateStatusConfig } from '../../Service/ApiNearExpirationService';
 import { Fetch_Find_Config_Success } from '../types/NearExpirationTypes';
 
 export const createNewExpiryConfig = (createNewExpiryConfig) => {
@@ -57,7 +57,7 @@ export const updateStatusConfigById = (idConfig, aBoolean) => {
 export const updateExpiryConfig = (idConfig, updateExpiryConfig) => {
     return async (dispatch) => {
         try {
-            const response = await updateExpiryConfig(idConfig, updateExpiryConfig);
+            const response = await updateDiscountExpiryConfig(idConfig, updateExpiryConfig);
             if (response.status === 200) {
                 dispatch(fetchAllConfig());
                 toast.success("Cập nhật cấu hình mục thành công!");

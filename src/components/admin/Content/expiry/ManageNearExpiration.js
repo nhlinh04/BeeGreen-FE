@@ -34,50 +34,7 @@ const ManageNearExpiration = () => {
                                     <div className="cart-content">
                                         <div className='shoe-content-hender'>
                                             <div className='shoe-search-add row'>
-                                                <div className='shoe-status col'>
-                                                    <label htmlFor="statusProduct" className="form-label">Trạng thái sản phẩm: </label>
-                                                    <div className='shoe-status d-flex justify-content-start'>
-                                                        <div className="form-check m-2">
-                                                            <input
-                                                                className="form-check-input"
-                                                                type="radio"
-                                                                name="statusProduct"
-                                                                value=""
-                                                            //    checked={searchStatus === ""} // Gán checked dựa trên state
-                                                            //onChange={(event) => setSearchStatus(event.target.value)}
-                                                            />
-                                                            <label className="form-check-label">
-                                                                Tất cả
-                                                            </label>
-                                                        </div>
-                                                        <div className="form-check m-2">
-                                                            <input
-                                                                className="form-check-input"
-                                                                type="radio"
-                                                                name="statusProduct"
-                                                                value="ACTIVE"
-                                                            //    checked={searchStatus === "ACTIVE"}
-                                                            //onChange={(event) => setSearchStatus(event.target.value)}
-                                                            />
-                                                            <label className="form-check-label">
-                                                                Đang hoạt động
-                                                            </label>
-                                                        </div>
-                                                        <div className="form-check m-2">
-                                                            <input
-                                                                className="form-check-input"
-                                                                type="radio"
-                                                                name="statusProduct"
-                                                                value="INACTIVE"
-                                                            //    checked={searchStatus === "INACTIVE"}
-                                                            //onChange={(event) => setSearchStatus(event.target.value)}
-                                                            />
-                                                            <label className="form-check-label">
-                                                                Ngừng hoạt động
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
+
                                                 <div className='shoe-add mb-3 col-2'>
                                                     <ModelCreate />
                                                 </div>

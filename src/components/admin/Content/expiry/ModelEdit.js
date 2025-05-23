@@ -3,32 +3,38 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateExpiryConfig, findConfigById } from '../../../../redux/action/NearExpiryAction';
+import { useDispatch } from 'react-redux';
+import { updateExpiryConfig } from '../../../../redux/action/NearExpiryAction';
 import 'react-toastify/dist/ReactToastify.css';
 import * as yup from 'yup';
 import { Formik } from 'formik';
 import { FaPenToSquare } from 'react-icons/fa6';
 
 function ModelEdit({ config }) {
-
     const dispatch = useDispatch();
     const [show, setShow] = useState(false);
+
     const [initialValues, setInitialValues] = useState({
-        daysBeforeExpiry: config.daysBeforeExpiry,
-        discountPercent: config.discountPercent,
-        status: config.status
+        daysBeforeExpiry: '',
+        discountPercent: '',
+        status: ''
     });
 
+    useEffect(() => {
+        if (config) {
+            setInitialValues({
+                daysBeforeExpiry: config.daysBeforeExpiry || '',
+                discountPercent: config.discountPercent || '',
+                status: config.status || ''
+            });
+
+        }
+    }, [config]);
 
     const handleClose = () => setShow(false);
-
-
-    const handleShow = async () => {
-
+    const handleShow = () => {
         setShow(true);
-    };
-
+    }
 
     const validationSchema = yup.object().shape({
         daysBeforeExpiry: yup.number()
@@ -42,8 +48,9 @@ function ModelEdit({ config }) {
 
     const handleSubmitEdit = async (values, { resetForm }) => {
         try {
-            dispatch(updateExpiryConfig(config.id, values)); // Bạn cần viết action này
-            toast.success("Cập nhật thành công!");
+            console.log("values", values);
+            console.log("config.id", config.id);
+            dispatch(updateExpiryConfig(config.id, values));
             handleClose();
             resetForm();
         } catch (error) {
@@ -82,9 +89,9 @@ function ModelEdit({ config }) {
                                         onBlur={handleBlur}
                                         isInvalid={touched.daysBeforeExpiry && !!errors.daysBeforeExpiry}
                                     />
-                                    {touched.daysBeforeExpiry && errors.daysBeforeExpiry && (
-                                        <div className="text-danger">{errors.daysBeforeExpiry}</div>
-                                    )}
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.daysBeforeExpiry}
+                                    </Form.Control.Feedback>
                                 </Form.Group>
 
                                 <Form.Group className="mt-3">
@@ -99,9 +106,9 @@ function ModelEdit({ config }) {
                                         onBlur={handleBlur}
                                         isInvalid={touched.discountPercent && !!errors.discountPercent}
                                     />
-                                    {touched.discountPercent && errors.discountPercent && (
-                                        <div className="text-danger">{errors.discountPercent}</div>
-                                    )}
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.discountPercent}
+                                    </Form.Control.Feedback>
                                 </Form.Group>
 
                                 <Modal.Footer className="mt-4">
