@@ -105,6 +105,8 @@ export const fetchStatisticsProduct = async () => {
                 existingItem.quantity += current.quantity;
                 existingItem.priceDiscount += current.priceDiscount;
                 existingItem.revenue += current.revenue;
+                existingItem.actualQuantity += current.actualQuantity;
+                existingItem.actualRevenue += current.actualRevenue;
             } else {
                 // Thêm mục mới nếu chưa tồn tại
                 acc.push({ ...current });

@@ -20,6 +20,7 @@ import { ResponsiveContainer } from "recharts";
 import { fetchBillStatisticsAction } from "../../../../redux/action/billAction";
 import { fetchAllAccountCustomer } from "../../../../redux/action/AccountAction";
 import { fetchStatisticsProduct } from "../../../../Service/ApiBillDetailService";
+import { fetchAllProduct } from "../../../../redux/action/productAction";
 import ListImageProduct from "../../../../image/ListImageProduct";
 import "./ManageStatistical.scss";
 import { format } from "date-fns";
@@ -48,6 +49,8 @@ const ManageStatistical = () => {
     useSelector((state) => state.bill.billStatistics) || [];
   const accounts =
     useSelector((state) => state.account.listAccountCusomer) || [];
+
+  const products = useSelector((state) => state.product.listProduct) || [];
 
   const formatCurrency = (value) => {
     if (!value) return 0;
@@ -153,6 +156,7 @@ const ManageStatistical = () => {
     fetchBillDetail();
     fetchData();
     dispatch(fetchAllAccountCustomer());
+    dispatch(fetchAllProduct());
   }, [dispatch]);
 
   const today = formatDateToYYYYMMDD(new Date());
@@ -351,9 +355,7 @@ const ManageStatistical = () => {
                 </div>
                 <div className="col">
                   <p className="m-0 fs-4 ps-4">
-                    {datas && datas.length > 0
-                      ? datas.reduce((total, item) => total + item.quantity, 0)
-                      : 0}
+                    {products.length}
                   </p>
                   <p className="m-0 fs-10">Sản phẩm</p>
                 </div>
@@ -367,11 +369,11 @@ const ManageStatistical = () => {
                   <p className="m-0 fs-4 ps-4">
                     {/* Assuming item.price is your total revenue */}
                     {completedBillStatistics &&
-                    completedBillStatistics.length > 0
+                      completedBillStatistics.length > 0
                       ? completedBillStatistics.reduce(
-                          (acc, item) => acc + item.numberBill,
-                          0
-                        )
+                        (acc, item) => acc + item.numberBill,
+                        0
+                      )
                       : 0}
                   </p>
                   <p className="m-0 fs-10">Đơn hàng đã hoàn thành</p>
@@ -386,11 +388,11 @@ const ManageStatistical = () => {
                   <p className="m-0 fs-4 ps-4">
                     {/* Assuming item.price is your total revenue */}
                     {cancelledAndFailedBills &&
-                    cancelledAndFailedBills.length > 0
+                      cancelledAndFailedBills.length > 0
                       ? cancelledAndFailedBills.reduce(
-                          (acc, item) => acc + item.numberBill,
-                          0
-                        )
+                        (acc, item) => acc + item.numberBill,
+                        0
+                      )
                       : 0}
                   </p>
                   <p className="m-0 fs-10">Đơn hàng đã hủy</p>
@@ -408,9 +410,9 @@ const ManageStatistical = () => {
                       completedBillStatistics &&
                         completedBillStatistics.length > 0
                         ? completedBillStatistics.reduce(
-                            (acc, item) => acc + item.price,
-                            0
-                          )
+                          (acc, item) => acc + item.price,
+                          0
+                        )
                         : 0
                     )}
                   </p>
@@ -453,7 +455,7 @@ const ManageStatistical = () => {
                             </td>
 
                             <td>{item.nameProduct}</td>
-                            <td>{item.quantity}</td>
+                            <td>{item.quantity.toFixed(2)}</td>
                             <td>{item.actualQuantity}</td>
                             <td>{formatCurrency(item.revenue)}</td>
                             <td>{formatCurrency(item.actualRevenue)}</td>

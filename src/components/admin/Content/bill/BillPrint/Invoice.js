@@ -2,7 +2,6 @@ import React from "react";
 import { Document, Page, Text, View, StyleSheet, Image, Font } from "@react-pdf/renderer";
 
 
-
 Font.register({
   family: "Roboto",
   src: "/font/Roboto-Regular.ttf", // Path to the TTF font file
