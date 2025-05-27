@@ -56,10 +56,12 @@ authorizeAxiosInstance.interceptors.response.use(
           toast.error("Không tìm thấy tài nguyên!");
           break;
         case 400: {
-          if (Array.isArray(errorData)) {
-            errorData.forEach(err => {
-              toast.error(err);
-            });
+
+          const message = errorData?.message;
+          if (message) {
+            toast.error(message);
+          } else if (Array.isArray(errorData)) {
+            errorData.forEach(err => toast.error(err));
           } else {
             toast.error("Đã xảy ra lỗi xác thực. Vui lòng kiểm tra lại.");
           }
