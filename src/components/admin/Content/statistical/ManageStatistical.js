@@ -64,12 +64,14 @@ const ManageStatistical = () => {
   const [endDate, setEndDate] = useState(""); // Đến ngày để trống mặc định
   const [filteredData, setFilteredData] = useState([]); // Lưu trữ dữ liệu đã lọc
   const handleDateRangeSearch = () => {
+    console.log("Nút đã được bấm");
     if (!startDate && !endDate) {
       alert("Vui lòng nhập ít nhất một trong hai ngày!");
       return;
     }
 
     const filteredStatistics = completedBillStatistics.filter((item) => {
+
       const itemDate = new Date(item.createdAt);
 
       // Lọc dữ liệu dựa trên Từ ngày hoặc Đến ngày
@@ -81,7 +83,6 @@ const ManageStatistical = () => {
         return itemDate >= new Date(startDate) && itemDate <= new Date(endDate); // Lọc theo cả hai
       }
     });
-
     setFilteredData(filteredStatistics); // Cập nhật dữ liệu lọc
   };
 
@@ -266,7 +267,7 @@ const ManageStatistical = () => {
                 <div className="col-1 d-flex align-items-end">
                   <button
                     className="btn btn-primary"
-                    onClick={handleDateRangeSearch}
+                    onClick={() => handleDateRangeSearch()}
                   >
                     Tìm kiếm
                   </button>
